@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -12,7 +13,7 @@
     <script src="https://live.zwidgets.com/js-sdk/1.1/ZohoEmbededAppSDK.min.js"></script>
     <script src="https://js.zohostatic.com/creator/widgets/version/1.0/widgetsdk-min.js"></script>
     <style>
-       body {
+        body {
             font-family: Arial, sans-serif;
             background-color: #ffffff;
             color: #2d2d2d;
@@ -20,7 +21,7 @@
         }
 
         h1 {
-            color: #3b73af; 
+            color: #3b73af;
             text-align: center;
         }
 
@@ -34,11 +35,11 @@
         .button-container {
             position: relative;
             display: inline-block;
-            margin-left: auto; 
+            margin-left: auto;
         }
 
         .main-button {
-            background-color: #e63946; 
+            background-color: #e63946;
             color: white;
             padding: 10px 20px;
             border: none;
@@ -67,7 +68,7 @@
         }
 
         .sub-button {
-            background-color: #f0ad4e; 
+            background-color: #f0ad4e;
             color: white;
             padding: 10px 20px;
             display: block;
@@ -80,7 +81,7 @@
         }
 
         .sub-button:hover {
-            background-color: #ec971f; 
+            background-color: #ec971f;
         }
 
         .button-container:hover .sub-button-container {
@@ -93,45 +94,46 @@
             margin: 20px 0;
             background-color: #ffffff;
             border-radius: 6px;
-            border: 1px solid #e9ecef; 
+            border: 1px solid #e9ecef;
         }
 
-        th, td {
+        th,
+        td {
             padding: 12px;
             text-align: left;
-            border-bottom: 1px solid #e9ecef; 
+            border-bottom: 1px solid #e9ecef;
         }
 
         thead {
-            background-color: #f8f9fa; 
+            background-color: #f8f9fa;
             color: #2d2d2d;
         }
 
         tr.task-row {
-            background-color: #e63946; 
+            background-color: #e63946;
             cursor: pointer;
             color: white;
-            border-bottom: 1px solid #e9ecef; 
+            border-bottom: 1px solid #e9ecef;
         }
 
         tr.task-row:hover {
-            background-color: #c5303e; 
+            background-color: #c5303e;
         }
 
         tr.subtask-header {
             display: none;
-            background-color: #f8f9fa; 
+            background-color: #f8f9fa;
             font-weight: bold;
         }
 
         tr.subtask-row {
             display: none;
             background-color: transparent;
-            border-bottom: 1px solid #e9ecef; 
+            border-bottom: 1px solid #e9ecef;
         }
 
         tr.subtask-row:hover {
-            background-color: #f0f0f0; 
+            background-color: #f0f0f0;
         }
 
         tr.subtask-row td {
@@ -144,12 +146,13 @@
         }
 
         .priority-medium {
-            background-color: #f0ad4e; 
+            background-color: #f0ad4e;
             color: white;
         }
 
         .priority-low {
-            background-color: #5bc0de; /* Light blue for low priority */
+            background-color: #5bc0de;
+            /* Light blue for low priority */
             color: white;
         }
 
@@ -171,7 +174,8 @@
         }
 
         button.view-details {
-            background-color: #e63946; /* Updated red color for View Details button */
+            background-color: #e63946;
+            /* Updated red color for View Details button */
             border: none;
             color: white;
             padding: 5px 10px;
@@ -180,7 +184,8 @@
         }
 
         button.view-details:hover {
-            background-color: #c5303e; /* Slightly darker red on hover */
+            background-color: #c5303e;
+            /* Slightly darker red on hover */
         }
 
         button.edit-task,
@@ -189,7 +194,8 @@
             border: none;
             cursor: pointer;
             font-size: 18px;
-            color: #e63946; /* Updated red icons to match overall color scheme */
+            color: #e63946;
+            /* Updated red icons to match overall color scheme */
             margin-left: 10px;
         }
 
@@ -200,13 +206,16 @@
         }
 
         .status-panel .status-count {
-            background-color: #ffffff; /* White background for status count panel */
+            background-color: #ffffff;
+            /* White background for status count panel */
             padding: 15px 25px;
             border-radius: 8px;
-            color: #2d2d2d; /* Dark text for visibility */
+            color: #2d2d2d;
+            /* Dark text for visibility */
             font-size: 16px;
             transition: background-color 0.3s, transform 0.3s;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Light shadow for elevated effect */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            /* Light shadow for elevated effect */
             display: flex;
             align-items: center;
         }
@@ -217,167 +226,216 @@
         }
 
         .status-open {
-            color: #5bc0de; /* Light blue for Open status */
+            color: #5bc0de;
+            /* Light blue for Open status */
         }
 
         .status-closed {
-            color: #5cb85c; /* Green for Closed status */
+            color: #5cb85c;
+
         }
 
         .status-awaiting {
-            color: #f0ad4e; /* Yellow for Awaiting Approval status */
+            color: #f0ad4e;
+
         }
 
         .status-overdue {
-            color: #e63946; /* Updated red for Overdue status */
+            color: #e63946;
+
         }
 
         .status-panel .status-count:hover {
-            background-color: #f0f0f0; /* Light grey on hover */
-            transform: scale(1.05); /* Slightly larger on hover */
+            background-color: #f0f0f0;
+            transform: scale(1.05);
         }
-     
     </style>
-    <script>
-      ZOHO.CREATOR.init().then(function() {
-    console.log("Initialized");
-    var subTaskContainer = {};
+    <!-- <script>
+        var subTaskContainer = {};
+        ZOHO.CREATOR.init().then(function () {
+            console.log("Initialized");
+            // Declare subTaskContainer at the top for global access within this function
 
-//   var allTask = { 
-//         appName: "task-management",
-//         reportName: "All_Tasks"
-//     };
-//     ZOHO.CREATOR.API.getAllRecords(allTask).then(function(response) {
-//         var recordArr = response.data;
-//         console.log("All Task: ",recordArr);
-//         recordArr.forEach(task => {
-//             $("#task-table").append(`
-//                 <tr class="task-row" task-number="${task.Task_Number}" onclick="toggleSubtasks(this)">
-//                     <td colspan="7"><span class="icon" data-tooltip="Expand List">⬇️</span> ${task.Task_Name} ( ${task.Task_Number} )</td>
-//                 </tr>
-               
-//             `);
-//             });
+            var config = {
+                appName: "task-management",
+                reportName: "All_Sub_Task_Report"
+            };
 
-//     }).catch(function(error) {
-//         console.error("Error fetching records:", error);
-//     });
+            ZOHO.CREATOR.API.getAllRecords(config).then(function (response) {
+                var subTaskArr = response.data;
+                console.log("All sub Task: ", subTaskArr);
 
-//     var config = { 
-//         appName: "task-management",
-//         reportName: "All_Sub_Task_Report"
-//     };
-//     ZOHO.CREATOR.API.getAllRecords(config).then(function(response) {
-//         var recordArr = response.data;
-//         console.log("All sub Task: ",recordArr);
-//     }).catch(function(error) {
-//         console.error("Error fetching records:", error);
-//     });
-// }).catch(function(initError) {
-//     console.error("Initialization error:", initError);
-// });
 
-var allTask = { 
-    appName: "task-management",
-    reportName: "All_Tasks"
-};
+                subTaskArr.forEach(subtask => {
+                    if (subTaskContainer[subtask.Task_Grouping]) {
+                        console.log("inside if", subtask.Task_Grouping);
+                        subTaskContainer[subtask.Task_Grouping].push(subtask.Task_Grouping);
+                    }
+                });
+            }).catch(function (error) {
+                console.error("Error fetching records:", error);
+            });
 
-ZOHO.CREATOR.API.getAllRecords(allTask).then(function(response) {
-    var recordArr = response.data;
-    console.log("All Task: ", recordArr);
-    
-    // Create a container to hold all subtasks
-   
+            var allTask = {
+                appName: "task-management",
+                reportName: "All_Tasks"
+            };
 
-    recordArr.forEach(task => {
-        // Create a row for each main task
-        $("#task-table").append(`
-            <tr class="task-row" task-number="${task.Task_Number}" onclick="toggleSubtasks(this)">
-                <td colspan="7"><span class="icon" data-tooltip="Expand List">⬇️</span> ${task.Task_Name} ( ${task.Task_Number} )</td>
-            </tr>
-            <tr class="subtask-row" data-task-number="${task.Task_Number}" style="display: none;">
-                <td colspan="7">
-                    <div class="subtasks"></div>
-                </td>
-            </tr>
-        `);
-        
-        // Prepare the subtask container
-        subTaskContainer[task.Task_Number] = [];
-    });
+            ZOHO.CREATOR.API.getAllRecords(allTask).then(function (response) {
+                var recordArr = response.data;
+                console.log("All Task: ", recordArr);
 
-    // Fetch all subtasks
-    var config = { 
-        appName: "task-management",
-        reportName: "All_Sub_Task_Report"
-    };
+                recordArr.forEach(task => {
+                    $("#task-table").append(`
+                <tr class="task-row" task-number="${task.Task_Number}" onclick="toggleSubtasks(this)">
+                    <td colspan="7"><span class="icon" data-tooltip="Expand List">⬇️</span> ${task.Task_Name} ( ${task.Task_Number} )</td>
+                </tr>
+                <tr class="subtask-row" data-task-number="${task.Task_Number}" style="display: none;">
+                    <td colspan="7">
+                        <div class="subtasks"></div>
+                    </td>
+                </tr>
+            `);
 
-    ZOHO.CREATOR.API.getAllRecords(config).then(function(response) {
-        var subTaskArr = response.data;
-        console.log("All sub Task: ", subTaskArr);
+                 
+                    subTaskContainer[task.Task_Number] = [];
+                });
+            }).catch(function (initError) {
+                console.error("Initialization error:", initError);
+            });
 
-        // Organize subtasks by their parent task number
-        subTaskArr.forEach(subtask => {
-            if (subTaskContainer[subtask.Task_Grouping]) {
-                console.log("inside if", subTask.Task_Grouping)
-                subTaskContainer[subtask.Task_Grouping].push(subtask);
-            }
         });
-    }).catch(function(error) {
-        console.error("Error fetching records:", error);
-    });
-}).catch(function(initError) {
-    console.error("Initialization error:", initError);
-});
 
 
-      });
+    </script> -->
 
+   
+    <script>
+        var subTaskContainer = {};
+    
+        ZOHO.CREATOR.init().then(function () {
+            console.log("Initialized");
+    
+            // Fetch all subtasks
+            var config = {
+                appName: "task-management",
+                reportName: "All_Sub_Task_Report"
+            };
+    
+            ZOHO.CREATOR.API.getAllRecords(config).then(function (response) {
+                var subTaskArr = response.data;
+                console.log("All Sub Tasks: ", subTaskArr);
+    
+                subTaskArr.forEach(subtask => {
+                    const taskGrouping = subtask.Task_Grouping;
+    
+                    // Initialize subTaskContainer for each Task_Grouping if not already
+                    if (!subTaskContainer[taskGrouping]) {
+                        subTaskContainer[taskGrouping] = [];
+                    }
+                    // Add the subtask object to the corresponding Task_Grouping array
+                    subTaskContainer[taskGrouping].push(subtask);
+                });
+            }).catch(function (error) {
+                console.error("Error fetching records:", error);
+            });
+    
+            // Fetch all main tasks
+            var allTask = {
+                appName: "task-management",
+                reportName: "All_Tasks"
+            };
+    
+            ZOHO.CREATOR.API.getAllRecords(allTask).then(function (response) {
+                var recordArr = response.data;
+                console.log("All Tasks: ", recordArr);
+    
+                recordArr.forEach(task => {
+                    const taskNumber = task.Task_Number;
+    
+                    // Append each main task to the table
+                    $("#task-table").append(`
+                        <tr class="task-row" task-number="${taskNumber}" onclick="toggleSubtasks(this)">
+                            <td colspan="7"><span class="icon" data-tooltip="Expand List">⬇️</span> ${task.Task_Name} ( ${taskNumber} )</td>
+                        </tr>
+                        <tr class="subtask-row" data-task-number="${taskNumber}" style="display: none;">
+                            <td colspan="7">
+                                <div class="subtasks"></div>
+                            </td>
+                        </tr>
+                    `);
+    
+                    // Initialize subTaskContainer array for each main task if not already done
+                    if (!subTaskContainer[taskNumber]) {
+                        subTaskContainer[taskNumber] = [];
+                    }
+                });
+            }).catch(function (initError) {
+                console.error("Initialization error:", initError);
+            });
+        });
+    
+        // Toggle subtasks for a task when clicked
+        function toggleSubtasks(taskRow) {
+            const taskNumber = $(taskRow).attr('task-number');
+            const subtaskRow = $(taskRow).next('.subtask-row');
+            subtaskRow.toggle();
+    
+            // Check if subTaskContainer contains subtasks for this task
+            if (subTaskContainer[taskNumber] && subTaskContainer[taskNumber].length > 0) {
+                // Map over each subtask to render its details
+                const subtasksHtml = subTaskContainer[taskNumber].map(sub => `
+                    <div>
+                        <strong>Task Name:</strong> ${sub.SubTask_Name || 'Unnamed Subtask'}<br>
+                        <strong>Assignee:</strong> ${sub.Assignee && sub.Assignee.length > 0 ? sub.Assignee[0].display_value : 'No Assignee'}<br>
+                        <strong>Status:</strong> ${sub.SubTask_Status ? sub.SubTask_Status.display_value : 'No Status'}<br>
+                        <strong>Priority:</strong> ${sub.Priority ? sub.Priority.display_value : 'No Priority'}<br>
+                        <strong>Start Date:</strong> ${sub.Start_Date || 'No Start Date'}<br>
+                        <strong>End Date:</strong> ${sub.Tentative_End_Date || 'No End Date'}
+                    </div><hr>
+                `).join('');
+                
+                // Insert the generated HTML into the subtask row
+                subtaskRow.find('.subtasks').html(subtasksHtml);
+            } else {
+                subtaskRow.find('.subtasks').html('<div>No subtasks available</div>');
+            }
+        }
     </script>
+    
+    
+
 </head>
+
 <body>
-  <!-- <h1>Task Management</h1>
 
-  <div class="status-panel">
-      <div class="status-count">
-          <i class="fas fa-tasks status-open"></i> Open: 4
-      </div>
-      <div class="status-count">
-          <i class="fas fa-check-circle status-closed"></i> Closed: 1
-      </div>
-      <div class="status-count">
-          <i class="fas fa-clock status-awaiting"></i> Awaiting Approval: 17
-      </div>
-      <div class="status-count">
-          <i class="fas fa-exclamation-circle status-overdue"></i> Overdue: 14
-      </div>
-  </div> -->
+    <div class="header">
+        <h2>All Tasks</h2>
+        <div class="button-container">
+            <button class="main-button">Create Task</button>
+            <div class="sub-button-container">
+                <button class="sub-button"
+                    onclick="window.open('https://creatorapp.zoho.com/support2327/task-management/#Form:Create_Sub_Task', '_blank')">Add
+                    Sub Task</button>
+            </div>
+        </div>
+    </div>
 
-  <div class="header">
-      <h2>All Tasks</h2>
-      <div class="button-container">
-          <button class="main-button">Create Task</button>
-          <div class="sub-button-container">
-              <button class="sub-button" onclick="window.open('https://creatorapp.zoho.com/support2327/task-management/#Form:Create_Sub_Task', '_blank')">Add Sub Task</button>
-          </div>
-      </div>
-  </div>
-
-  <div class="task-container">
-      <table>
-          <thead>
-              <tr>
-                  <th>Task Name</th>
-                  <th>Assignee</th>
-                  <th>Status</th>
-                  <th>Priority</th>
-                  <th>Start Date</th>
-                  <th>End Date</th>
-                  <th>Sub Tasks</th>
-              </tr>
-          </thead>
-          <tbody id="task-table">
-              <!-- <tr class="task-row" onclick="toggleSubtasks(this)">
+    <div class="task-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Task Name</th>
+                    <th>Assignee</th>
+                    <th>Status</th>
+                    <th>Priority</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                    <th>Sub Tasks</th>
+                </tr>
+            </thead>
+            <tbody id="task-table">
+                <!-- <tr class="task-row" onclick="toggleSubtasks(this)">
                   <td colspan="7"><span class="icon" data-tooltip="Expand List">⬇️</span> General (3)</td>
               </tr>
               <tr class="subtask-header">
@@ -466,54 +524,104 @@ ZOHO.CREATOR.API.getAllRecords(allTask).then(function(response) {
                       <button class="delete-task" title="Delete Task">🗑️</button>
                   </td>
               </tr> -->
-          </tbody>
-      </table>
-  </div>
+            </tbody>
+        </table>
+    </div>
 
-  <script>
-      function toggleSubtasks(taskRow) {
-          const nextSibling = taskRow.nextElementSibling;
-          if (nextSibling && nextSibling.classList.contains('subtask-header')) {
-              let sibling = nextSibling;
-              const subTaskRows = [];
+    <script>
 
-              while (sibling && (sibling.classList.contains('subtask-row') || sibling.classList.contains('subtask-header'))) {
-                  subTaskRows.push(sibling);
-                  sibling = sibling.nextElementSibling;
-              }
+        // function toggleSubtasks(mainTaskRow) {
+        //     var taskNumber = $(mainTaskRow).attr("task-number");
+        //     var subtaskRow = $(mainTaskRow).next(".subtask-row");
+        //     var subtaskDiv = subtaskRow.find(".subtasks");
+        //     subtaskRow.toggle();
 
-              subTaskRows.forEach(row => {
-                  row.style.display = row.style.display === 'table-row' ? 'none' : 'table-row';
-              });
-              nextSibling.style.display = nextSibling.style.display === 'table-row' ? 'none' : 'table-row';
-          }
-      }
+        //     if (subtaskDiv.is(':empty')) {
+        //         var subtasks = subTaskContainer[taskNumber];
+        //         if (subtasks && subtasks.length > 0) {
+        //             subtasks.forEach(subtask => {
+        //                 subtaskDiv.append(`
+        //             <div>${subtask.Subtask_Name} ( ${subtask.Subtask_Number} )</div>
+        //         `);
+        //             });
+        //         } else {
+        //             subtaskDiv.append(`<div>No subtasks available.</div>`);
+        //         }
+        //     }
+        // }
 
-      function toggleSubtasks(mainTaskRow) {
-    var taskNumber = $(mainTaskRow).attr("task-number");
-    var subtaskRow = $(mainTaskRow).next(".subtask-row");
-    var subtaskDiv = subtaskRow.find(".subtasks");
+        // function toggleSubtasks(mainTaskRow) {
+        //     var taskNumber = $(mainTaskRow).attr("task-number");
+        //     var subtaskRow = $(mainTaskRow).next(".subtask-row");
+        //     var subtaskDiv = subtaskRow.find(".subtasks");
+        //     subtaskRow.toggle();
 
-    // Toggle visibility
-    subtaskRow.toggle();
+        //     if (subtaskDiv.is(':empty')) {
+        //         var subtasks = subTaskContainer[taskNumber];
+        //         if (subtasks && subtasks.length > 0) {
+        //             subtasks.forEach(subtask => {
+        //                 subtaskDiv.append(`
+        //             <div>${subtask.Subtask_Name} ( ${subtask.Subtask_Number} )</div>
+        //         `);
+        //             });
+        //         } else {
+        //             subtaskDiv.append(`<div>No subtasks available.</div>`);
+        //         }
+        //     }
+        // }
 
-    // Check if subtasks are already loaded
-    if (subtaskDiv.is(':empty')) {
-        // Load subtasks if not already loaded
-        var subtasks = subTaskContainer[taskNumber];
-        if (subtasks && subtasks.length > 0) {
-            subtasks.forEach(subtask => {
-                subtaskDiv.append(`
-                    <div>${subtask.Subtask_Name} ( ${subtask.Subtask_Number} )</div>
-                `);
-            });
-        } else {
-            subtaskDiv.append(`<div>No subtasks available.</div>`);
+        //  // Toggle subtasks for a task when clicked
+        //  function toggleSubtasks(taskRow) {
+        //     const taskNumber = $(taskRow).attr('task-number');
+        //     const subtaskRow = $(taskRow).next('.subtask-row');
+        //     subtaskRow.toggle();
+    
+        //     // Check if subTaskContainer contains subtasks for this task
+        //     if (subTaskContainer[taskNumber] && subTaskContainer[taskNumber].length > 0) {
+        //         // Map over each subtask to render its details
+        //         const subtasksHtml = subTaskContainer[taskNumber].map(sub => `
+        //             <div>${sub.Subtask_Name} (${sub.Task_Grouping})</div> <!-- Customize with subtask properties -->
+        //         `).join('');
+        //         // Insert the generated HTML into the subtask row
+        //         subtaskRow.find('.subtasks').html(subtasksHtml);
+        //     } else {
+        //         subtaskRow.find('.subtasks').html('<div>No subtasks available</div>');
+        //     }
+        // }
+
+        function toggleSubtasks(taskRow) {
+            const taskNumber = $(taskRow).attr('task-number');
+            const subtaskRow = $(taskRow).next('.subtask-row');
+            subtaskRow.toggle();
+    
+            // Check if subTaskContainer contains subtasks for this task
+            if (subTaskContainer[taskNumber] && subTaskContainer[taskNumber].length > 0) {
+                // Map over each subtask to render its details
+                const subtasksHtml = subTaskContainer[taskNumber].map(sub => `
+                    <div>
+                        <strong>Task Name:</strong> ${sub.SubTask_Name || 'Unnamed Subtask'}<br>
+                        <strong>Assignee:</strong> ${sub.Assignee && sub.Assignee.length > 0 ? sub.Assignee[0].display_value : 'No Assignee'}<br>
+                        <strong>Status:</strong> ${sub.SubTask_Status ? sub.SubTask_Status.display_value : 'No Status'}<br>
+                        <strong>Priority:</strong> ${sub.Priority ? sub.Priority.display_value : 'No Priority'}<br>
+                        <strong>Start Date:</strong> ${sub.Start_Date || 'No Start Date'}<br>
+                        <strong>End Date:</strong> ${sub.Tentative_End_Date || 'No End Date'}
+                      
+                      <button class="view-details" onclick="window.open('https://example.com', '_blank')">View Details</button>
+                      <button class="edit-task" title="Edit Task">✏️</button>
+                      <button class="delete-task" title="Delete Task">🗑️</button>
+               
+                    </div><hr>
+                `).join('');
+                
+                // Insert the generated HTML into the subtask row
+                subtaskRow.find('.subtasks').html(subtasksHtml);
+            } else {
+                subtaskRow.find('.subtasks').html('<div>No subtasks available</div>');
+            }
         }
-    }
-}
-  </script>
-        
+    </script>
+
 
 </body>
+
 </html>
