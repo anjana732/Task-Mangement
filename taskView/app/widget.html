@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="https://live.zwidgets.com/js-sdk/1.1/ZohoEmbededAppSDK.min.js"></script>
+    <script src="https://js.zohostatic.com/creator/widgets/version/1.0/widgetsdk-min.js"></script>
+    <style>
+       body {
+            font-family: Arial, sans-serif;
+            background-color: #ffffff; /* Light grey background similar to the image */
+            color: #2d2d2d;
+            margin: 20px;
+        }
+
+        h1 {
+            color: #3b73af; /* Blue color for page heading, matching the image */
+            text-align: center;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .button-container {
+            position: relative;
+            display: inline-block;
+            margin-left: auto; 
+        }
+
+        .main-button {
+            background-color: #e63946; 
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            border-radius: 8px;
+            margin-right: 10px;
+            position: relative;
+        }
+
+        .main-button:after {
+            content: "▼";
+            font-size: 12px;
+            margin-left: 10px;
+        }
+
+        .sub-button-container {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            z-index: 1;
+            background-color: #e63946; /* Updated red color from the image */
+            border-radius: 8px;
+            width: calc(100% + 20px);
+        }
+
+        .sub-button {
+            background-color: #f0ad4e; /* Yellow button color similar to image */
+            color: white;
+            padding: 10px 20px;
+            display: block;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            text-align: left;
+            border-radius: 8px;
+            transition: background-color 0.3s;
+        }
+
+        .sub-button:hover {
+            background-color: #ec971f; /* Darker yellow for hover effect */
+        }
+
+        .button-container:hover .sub-button-container {
+            display: block;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background-color: #ffffff; /* White table background similar to the card elements in the image */
+            border-radius: 6px;
+            border: 1px solid #e9ecef; /* Add border weight for better separation */
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #e9ecef; /* Light border to match the look in the image */
+        }
+
+        thead {
+            background-color: #f8f9fa; /* Light grey background for header */
+            color: #2d2d2d;
+        }
+
+        tr.task-row {
+            background-color: #e63946; /* Updated red color for main task rows */
+            cursor: pointer;
+            color: white;
+            border-bottom: 1px solid #e9ecef; /* Border weight for task area */
+        }
+
+        tr.task-row:hover {
+            background-color: #c5303e; /* Slightly darker red for hover effect */
+        }
+
+        tr.subtask-header {
+            display: none;
+            background-color: #f8f9fa; /* Light grey for header */
+            font-weight: bold;
+        }
+
+        tr.subtask-row {
+            display: none;
+            background-color: transparent;
+            border-bottom: 1px solid #e9ecef; /* Border weight for subtask area */
+        }
+
+        tr.subtask-row:hover {
+            background-color: #f0f0f0; /* Light grey for hover */
+        }
+
+        tr.subtask-row td {
+            border-top: none;
+        }
+
+        .priority-urgent {
+            background-color: #f28b82; /* Milder red for urgent priority */
+            color: white;
+        }
+
+        .priority-medium {
+            background-color: #f0ad4e; /* Yellow for medium priority */
+            color: white;
+        }
+
+        .priority-low {
+            background-color: #5bc0de; /* Light blue for low priority */
+            color: white;
+        }
+
+        .icon {
+            cursor: pointer;
+            margin-right: 10px;
+        }
+
+        .icon:hover::after {
+            content: attr(data-tooltip);
+            position: absolute;
+            background-color: #444;
+            color: white;
+            padding: 5px;
+            border-radius: 4px;
+            top: 0;
+            left: 100%;
+            white-space: nowrap;
+        }
+
+        button.view-details {
+            background-color: #e63946; /* Updated red color for View Details button */
+            border: none;
+            color: white;
+            padding: 5px 10px;
+            cursor: pointer;
+            border-radius: 8px;
+        }
+
+        button.view-details:hover {
+            background-color: #c5303e; /* Slightly darker red on hover */
+        }
+
+        button.edit-task,
+        button.delete-task {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 18px;
+            color: #e63946; /* Updated red icons to match overall color scheme */
+            margin-left: 10px;
+        }
+
+        .status-panel {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .status-panel .status-count {
+            background-color: #ffffff; /* White background for status count panel */
+            padding: 15px 25px;
+            border-radius: 8px;
+            color: #2d2d2d; /* Dark text for visibility */
+            font-size: 16px;
+            transition: background-color 0.3s, transform 0.3s;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Light shadow for elevated effect */
+            display: flex;
+            align-items: center;
+        }
+
+        .status-panel .status-count i {
+            margin-right: 10px;
+            font-size: 20px;
+        }
+
+        .status-open {
+            color: #5bc0de; /* Light blue for Open status */
+        }
+
+        .status-closed {
+            color: #5cb85c; /* Green for Closed status */
+        }
+
+        .status-awaiting {
+            color: #f0ad4e; /* Yellow for Awaiting Approval status */
+        }
+
+        .status-overdue {
+            color: #e63946; /* Updated red for Overdue status */
+        }
+
+        .status-panel .status-count:hover {
+            background-color: #f0f0f0; /* Light grey on hover */
+            transform: scale(1.05); /* Slightly larger on hover */
+        }
+     
+    </style>
+    <script>
+      ZOHO.CREATOR.init().then(function() {
+    console.log("Initialized");
+    var subTaskContainer = {};
+
+//   var allTask = { 
+//         appName: "task-management",
+//         reportName: "All_Tasks"
+//     };
+//     ZOHO.CREATOR.API.getAllRecords(allTask).then(function(response) {
+//         var recordArr = response.data;
+//         console.log("All Task: ",recordArr);
+//         recordArr.forEach(task => {
+//             $("#task-table").append(`
+//                 <tr class="task-row" task-number="${task.Task_Number}" onclick="toggleSubtasks(this)">
+//                     <td colspan="7"><span class="icon" data-tooltip="Expand List">⬇️</span> ${task.Task_Name} ( ${task.Task_Number} )</td>
+//                 </tr>
+               
+//             `);
+//             });
+
+//     }).catch(function(error) {
+//         console.error("Error fetching records:", error);
+//     });
+
+//     var config = { 
+//         appName: "task-management",
+//         reportName: "All_Sub_Task_Report"
+//     };
+//     ZOHO.CREATOR.API.getAllRecords(config).then(function(response) {
+//         var recordArr = response.data;
+//         console.log("All sub Task: ",recordArr);
+//     }).catch(function(error) {
+//         console.error("Error fetching records:", error);
+//     });
+// }).catch(function(initError) {
+//     console.error("Initialization error:", initError);
+// });
+
+var allTask = { 
+    appName: "task-management",
+    reportName: "All_Tasks"
+};
+
+ZOHO.CREATOR.API.getAllRecords(allTask).then(function(response) {
+    var recordArr = response.data;
+    console.log("All Task: ", recordArr);
+    
+    // Create a container to hold all subtasks
+   
+
+    recordArr.forEach(task => {
+        // Create a row for each main task
+        $("#task-table").append(`
+            <tr class="task-row" task-number="${task.Task_Number}" onclick="toggleSubtasks(this)">
+                <td colspan="7"><span class="icon" data-tooltip="Expand List">⬇️</span> ${task.Task_Name} ( ${task.Task_Number} )</td>
+            </tr>
+            <tr class="subtask-row" data-task-number="${task.Task_Number}" style="display: none;">
+                <td colspan="7">
+                    <div class="subtasks"></div>
+                </td>
+            </tr>
+        `);
+        
+        // Prepare the subtask container
+        subTaskContainer[task.Task_Number] = [];
+    });
+
+    // Fetch all subtasks
+    var config = { 
+        appName: "task-management",
+        reportName: "All_Sub_Task_Report"
+    };
+
+    ZOHO.CREATOR.API.getAllRecords(config).then(function(response) {
+        var subTaskArr = response.data;
+        console.log("All sub Task: ", subTaskArr);
+
+        // Organize subtasks by their parent task number
+        subTaskArr.forEach(subtask => {
+            if (subTaskContainer[subtask.Task_Grouping]) {
+                console.log("inside if", subTask.Task_Grouping)
+                subTaskContainer[subtask.Task_Grouping].push(subtask);
+            }
+        });
+    }).catch(function(error) {
+        console.error("Error fetching records:", error);
+    });
+}).catch(function(initError) {
+    console.error("Initialization error:", initError);
+});
+
+
+      });
+
+    </script>
+</head>
+<body>
+  <!-- <h1>Task Management</h1>
+
+  <div class="status-panel">
+      <div class="status-count">
+          <i class="fas fa-tasks status-open"></i> Open: 4
+      </div>
+      <div class="status-count">
+          <i class="fas fa-check-circle status-closed"></i> Closed: 1
+      </div>
+      <div class="status-count">
+          <i class="fas fa-clock status-awaiting"></i> Awaiting Approval: 17
+      </div>
+      <div class="status-count">
+          <i class="fas fa-exclamation-circle status-overdue"></i> Overdue: 14
+      </div>
+  </div> -->
+
+  <div class="header">
+      <h2>All Tasks</h2>
+      <div class="button-container">
+          <button class="main-button">Create Task</button>
+          <div class="sub-button-container">
+              <button class="sub-button" onclick="window.open('https://creatorapp.zoho.com/support2327/task-management/#Form:Create_Sub_Task', '_blank')">Add Sub Task</button>
+          </div>
+      </div>
+  </div>
+
+  <div class="task-container">
+      <table>
+          <thead>
+              <tr>
+                  <th>Task Name</th>
+                  <th>Assignee</th>
+                  <th>Status</th>
+                  <th>Priority</th>
+                  <th>Start Date</th>
+                  <th>End Date</th>
+                  <th>Sub Tasks</th>
+              </tr>
+          </thead>
+          <tbody id="task-table">
+              <!-- <tr class="task-row" onclick="toggleSubtasks(this)">
+                  <td colspan="7"><span class="icon" data-tooltip="Expand List">⬇️</span> General (3)</td>
+              </tr>
+              <tr class="subtask-header">
+                  <td>Task Name</td>
+                  <td>Assignee</td>
+                  <td>Status</td>
+                  <td>Priority</td>
+                  <td>Start Date</td>
+                  <td>End Date</td>
+                  <td>Action</td> 
+              </tr>
+              <tr class="subtask-row">
+                  <td>Zoho CRM Configuration</td>
+                  <td>Mary Smith</td>
+                  <td>Open</td>
+                  <td class="priority-urgent">Urgent</td>
+                  <td>2024-09-01</td>
+                  <td>2024-09-30</td>
+                  <td>
+                      <button class="view-details" onclick="window.open('https://example.com', '_blank')">View Details</button>
+                      <button class="edit-task" title="Edit Task">✏️</button>
+                      <button class="delete-task" title="Delete Task">🗑️</button>
+                  </td>
+              </tr>
+              <tr class="subtask-row">
+                  <td>Zoho CRM Customization</td>
+                  <td>Paul Allen</td>
+                  <td>Open</td>
+                  <td class="priority-medium">Medium</td>
+                  <td>2024-09-05</td>
+                  <td>2024-09-20</td>
+                  <td>
+                      <button class="view-details" onclick="window.open('https://example.com', '_blank')">View Details</button>
+                      <button class="edit-task" title="Edit Task">✏️</button>
+                      <button class="delete-task" title="Delete Task">🗑️</button>
+                  </td>
+              </tr>
+              <tr class="subtask-row">
+                  <td>Zoho CRM Integration</td>
+                  <td>Anna White</td>
+                  <td>Closed</td>
+                  <td class="priority-low">Low</td>
+                  <td>2024-08-20</td>
+                  <td>2024-09-10</td>
+                  <td>
+                      <button class="view-details" onclick="window.open('https://example.com', '_blank')">View Details</button>
+                      <button class="edit-task" title="Edit Task">✏️</button>
+                      <button class="delete-task" title="Delete Task">🗑️</button>
+                  </td>
+              </tr>
+              <tr class="task-row" onclick="toggleSubtasks(this)">
+                  <td colspan="7"><span class="icon" data-tooltip="Expand List">⬇️</span> Zoho Desk Configuration (2)</td>
+              </tr>
+              <tr class="subtask-header">
+                   <td>Task Name</td>
+                  <td>Assignee</td>
+                  <td>Status</td>
+                  <td>Priority</td>
+                  <td>Start Date</td>
+                  <td>End Date</td>
+                  <td>Action</td>
+              </tr>
+              <tr class="subtask-row">
+                  <td>Zoho Desk Customization</td>
+                  <td>Sarah Davis</td>
+                  <td>Open</td>
+                  <td class="priority-medium">Medium</td>
+                  <td>2024-09-01</td>
+                  <td>2024-09-15</td>
+                  <td>
+                      <button class="view-details" onclick="window.open('https://example.com', '_blank')">View Details</button>
+                      <button class="edit-task" title="Edit Task">✏️</button>
+                      <button class="delete-task" title="Delete Task">🗑️</button>
+                  </td>
+              </tr>
+              <tr class="subtask-row">
+                  <td>Zoho Desk Integration</td>
+                  <td>Chris Wilson</td>
+                  <td>Open</td>
+                  <td class="priority-urgent">Urgent</td>
+                  <td>2024-08-25</td>
+                  <td>2024-09-15</td>
+                  <td>
+                      <button class="view-details" onclick="window.open('https://example.com', '_blank')">View Details</button>
+                      <button class="edit-task" title="Edit Task">✏️</button>
+                      <button class="delete-task" title="Delete Task">🗑️</button>
+                  </td>
+              </tr> -->
+          </tbody>
+      </table>
+  </div>
+
+  <script>
+      function toggleSubtasks(taskRow) {
+          const nextSibling = taskRow.nextElementSibling;
+          if (nextSibling && nextSibling.classList.contains('subtask-header')) {
+              let sibling = nextSibling;
+              const subTaskRows = [];
+
+              while (sibling && (sibling.classList.contains('subtask-row') || sibling.classList.contains('subtask-header'))) {
+                  subTaskRows.push(sibling);
+                  sibling = sibling.nextElementSibling;
+              }
+
+              subTaskRows.forEach(row => {
+                  row.style.display = row.style.display === 'table-row' ? 'none' : 'table-row';
+              });
+              nextSibling.style.display = nextSibling.style.display === 'table-row' ? 'none' : 'table-row';
+          }
+      }
+
+      function toggleSubtasks(mainTaskRow) {
+    var taskNumber = $(mainTaskRow).attr("task-number");
+    var subtaskRow = $(mainTaskRow).next(".subtask-row");
+    var subtaskDiv = subtaskRow.find(".subtasks");
+
+    // Toggle visibility
+    subtaskRow.toggle();
+
+    // Check if subtasks are already loaded
+    if (subtaskDiv.is(':empty')) {
+        // Load subtasks if not already loaded
+        var subtasks = subTaskContainer[taskNumber];
+        if (subtasks && subtasks.length > 0) {
+            subtasks.forEach(subtask => {
+                subtaskDiv.append(`
+                    <div>${subtask.Subtask_Name} ( ${subtask.Subtask_Number} )</div>
+                `);
+            });
+        } else {
+            subtaskDiv.append(`<div>No subtasks available.</div>`);
+        }
+    }
+}
+  </script>
+        
+
+</body>
+</html>
