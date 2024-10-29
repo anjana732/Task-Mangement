@@ -1,0 +1,236 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #ffffff;
+    color: #2d2d2d;
+    margin: 20px;
+}
+
+h1 {
+    color: #3b73af;
+    text-align: center;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.button-container {
+    position: relative;
+    display: inline-block;
+    margin-left: auto;
+}
+
+.main-button {
+    background-color: #e63946;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 8px;
+    margin-right: 10px;
+    position: relative;
+}
+
+.main-button:after {
+    content: "▼";
+    font-size: 12px;
+    margin-left: 10px;
+}
+
+.sub-button-container {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 1;
+    background-color: #e63946;
+    border-radius: 8px;
+    width: calc(100% + 20px);
+}
+
+.sub-button {
+    background-color: #f0ad4e;
+    color: white;
+    padding: 10px 20px;
+    display: block;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    text-align: left;
+    border-radius: 8px;
+    transition: background-color 0.3s;
+}
+
+.sub-button:hover {
+    background-color: #ec971f;
+}
+
+.button-container:hover .sub-button-container {
+    display: block;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    background-color: #ffffff;
+    border-radius: 6px;
+    border: 1px solid #e9ecef;
+}
+
+th,
+td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #e9ecef;
+}
+
+thead {
+    background-color: #f8f9fa;
+    color: #2d2d2d;
+}
+
+tr.task-row {
+    background-color: #e63946;
+    cursor: pointer;
+    color: white;
+    border-bottom: 1px solid #e9ecef;
+}
+
+tr.task-row:hover {
+    background-color: #c5303e;
+}
+
+tr.subtask-header {
+    display: none;
+    background-color: #f8f9fa;
+    font-weight: bold;
+}
+
+tr.subtask-row {
+    display: none;
+    background-color: transparent;
+    border-bottom: 1px solid #e9ecef;
+}
+
+tr.subtask-row:hover {
+    background-color: #f0f0f0;
+}
+
+tr.subtask-row td {
+    border-top: none;
+}
+
+.priority-urgent {
+    background-color: #f28b82;
+    color: white;
+}
+
+.priority-medium {
+    background-color: #f0ad4e;
+    color: white;
+}
+
+.priority-low {
+    background-color: #5bc0de;
+    /* Light blue for low priority */
+    color: white;
+}
+
+.icon {
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+.icon:hover::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    background-color: #444;
+    color: white;
+    padding: 5px;
+    border-radius: 4px;
+    top: 0;
+    left: 100%;
+    white-space: nowrap;
+}
+
+button.view-details {
+    background-color: #e63946;
+    /* Updated red color for View Details button */
+    border: none;
+    color: white;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 8px;
+}
+
+button.view-details:hover {
+    background-color: #c5303e;
+    /* Slightly darker red on hover */
+}
+
+button.edit-task,
+button.delete-task {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+    color: #e63946;
+    /* Updated red icons to match overall color scheme */
+    margin-left: 10px;
+}
+
+.status-panel {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.status-panel .status-count {
+    background-color: #ffffff;
+    /* White background for status count panel */
+    padding: 15px 25px;
+    border-radius: 8px;
+    color: #2d2d2d;
+    /* Dark text for visibility */
+    font-size: 16px;
+    transition: background-color 0.3s, transform 0.3s;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    /* Light shadow for elevated effect */
+    display: flex;
+    align-items: center;
+}
+
+.status-panel .status-count i {
+    margin-right: 10px;
+    font-size: 20px;
+}
+
+.status-open {
+    color: #5bc0de;
+    /* Light blue for Open status */
+}
+
+.status-closed {
+    color: #5cb85c;
+
+}
+
+.status-awaiting {
+    color: #f0ad4e;
+
+}
+
+.status-overdue {
+    color: #e63946;
+
+}
+
+.status-panel .status-count:hover {
+    background-color: #f0f0f0;
+    transform: scale(1.05);
+}

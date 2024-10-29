@@ -7,316 +7,17 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-
+    <link rel="stylesheet" href="style.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script src="https://live.zwidgets.com/js-sdk/1.1/ZohoEmbededAppSDK.min.js"></script>
     <script src="https://js.zohostatic.com/creator/widgets/version/1.0/widgetsdk-min.js"></script>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #ffffff;
-            color: #2d2d2d;
-            margin: 20px;
-        }
-
-        h1 {
-            color: #3b73af;
-            text-align: center;
-        }
-
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-
-        .button-container {
-            position: relative;
-            display: inline-block;
-            margin-left: auto;
-        }
-
-        .main-button {
-            background-color: #e63946;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            cursor: pointer;
-            font-size: 16px;
-            border-radius: 8px;
-            margin-right: 10px;
-            position: relative;
-        }
-
-        .main-button:after {
-            content: "▼";
-            font-size: 12px;
-            margin-left: 10px;
-        }
-
-        .sub-button-container {
-            display: none;
-            position: absolute;
-            top: 100%;
-            left: 0;
-            z-index: 1;
-            background-color: #e63946;
-            border-radius: 8px;
-            width: calc(100% + 20px);
-        }
-
-        .sub-button {
-            background-color: #f0ad4e;
-            color: white;
-            padding: 10px 20px;
-            display: block;
-            border: none;
-            cursor: pointer;
-            font-size: 16px;
-            text-align: left;
-            border-radius: 8px;
-            transition: background-color 0.3s;
-        }
-
-        .sub-button:hover {
-            background-color: #ec971f;
-        }
-
-        .button-container:hover .sub-button-container {
-            display: block;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 20px 0;
-            background-color: #ffffff;
-            border-radius: 6px;
-            border: 1px solid #e9ecef;
-        }
-
-        th,
-        td {
-            padding: 12px;
-            text-align: left;
-            border-bottom: 1px solid #e9ecef;
-        }
-
-        thead {
-            background-color: #f8f9fa;
-            color: #2d2d2d;
-        }
-
-        tr.task-row {
-            background-color: #e63946;
-            cursor: pointer;
-            color: white;
-            border-bottom: 1px solid #e9ecef;
-        }
-
-        tr.task-row:hover {
-            background-color: #c5303e;
-        }
-
-        tr.subtask-header {
-            display: none;
-            background-color: #f8f9fa;
-            font-weight: bold;
-        }
-
-        tr.subtask-row {
-            display: none;
-            background-color: transparent;
-            border-bottom: 1px solid #e9ecef;
-        }
-
-        tr.subtask-row:hover {
-            background-color: #f0f0f0;
-        }
-
-        tr.subtask-row td {
-            border-top: none;
-        }
-
-        .priority-urgent {
-            background-color: #f28b82;
-            color: white;
-        }
-
-        .priority-medium {
-            background-color: #f0ad4e;
-            color: white;
-        }
-
-        .priority-low {
-            background-color: #5bc0de;
-            /* Light blue for low priority */
-            color: white;
-        }
-
-        .icon {
-            cursor: pointer;
-            margin-right: 10px;
-        }
-
-        .icon:hover::after {
-            content: attr(data-tooltip);
-            position: absolute;
-            background-color: #444;
-            color: white;
-            padding: 5px;
-            border-radius: 4px;
-            top: 0;
-            left: 100%;
-            white-space: nowrap;
-        }
-
-        button.view-details {
-            background-color: #e63946;
-            /* Updated red color for View Details button */
-            border: none;
-            color: white;
-            padding: 5px 10px;
-            cursor: pointer;
-            border-radius: 8px;
-        }
-
-        button.view-details:hover {
-            background-color: #c5303e;
-            /* Slightly darker red on hover */
-        }
-
-        button.edit-task,
-        button.delete-task {
-            background: none;
-            border: none;
-            cursor: pointer;
-            font-size: 18px;
-            color: #e63946;
-            /* Updated red icons to match overall color scheme */
-            margin-left: 10px;
-        }
-
-        .status-panel {
-            display: flex;
-            gap: 15px;
-            margin-bottom: 20px;
-        }
-
-        .status-panel .status-count {
-            background-color: #ffffff;
-            /* White background for status count panel */
-            padding: 15px 25px;
-            border-radius: 8px;
-            color: #2d2d2d;
-            /* Dark text for visibility */
-            font-size: 16px;
-            transition: background-color 0.3s, transform 0.3s;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            /* Light shadow for elevated effect */
-            display: flex;
-            align-items: center;
-        }
-
-        .status-panel .status-count i {
-            margin-right: 10px;
-            font-size: 20px;
-        }
-
-        .status-open {
-            color: #5bc0de;
-            /* Light blue for Open status */
-        }
-
-        .status-closed {
-            color: #5cb85c;
-
-        }
-
-        .status-awaiting {
-            color: #f0ad4e;
-
-        }
-
-        .status-overdue {
-            color: #e63946;
-
-        }
-
-        .status-panel .status-count:hover {
-            background-color: #f0f0f0;
-            transform: scale(1.05);
-        }
-    </style>
-    <!-- <script>
-        var subTaskContainer = {};
-        ZOHO.CREATOR.init().then(function () {
-            console.log("Initialized");
-            // Declare subTaskContainer at the top for global access within this function
-
-            var config = {
-                appName: "task-management",
-                reportName: "All_Sub_Task_Report"
-            };
-
-            ZOHO.CREATOR.API.getAllRecords(config).then(function (response) {
-                var subTaskArr = response.data;
-                console.log("All sub Task: ", subTaskArr);
-
-
-                subTaskArr.forEach(subtask => {
-                    if (subTaskContainer[subtask.Task_Grouping]) {
-                        console.log("inside if", subtask.Task_Grouping);
-                        subTaskContainer[subtask.Task_Grouping].push(subtask.Task_Grouping);
-                    }
-                });
-            }).catch(function (error) {
-                console.error("Error fetching records:", error);
-            });
-
-            var allTask = {
-                appName: "task-management",
-                reportName: "All_Tasks"
-            };
-
-            ZOHO.CREATOR.API.getAllRecords(allTask).then(function (response) {
-                var recordArr = response.data;
-                console.log("All Task: ", recordArr);
-
-                recordArr.forEach(task => {
-                    $("#task-table").append(`
-                <tr class="task-row" task-number="${task.Task_Number}" onclick="toggleSubtasks(this)">
-                    <td colspan="7"><span class="icon" data-tooltip="Expand List">⬇️</span> ${task.Task_Name} ( ${task.Task_Number} )</td>
-                </tr>
-                <tr class="subtask-row" data-task-number="${task.Task_Number}" style="display: none;">
-                    <td colspan="7">
-                        <div class="subtasks"></div>
-                    </td>
-                </tr>
-            `);
-
-                 
-                    subTaskContainer[task.Task_Number] = [];
-                });
-            }).catch(function (initError) {
-                console.error("Initialization error:", initError);
-            });
-
-        });
-
-
-    </script> -->
-
-   
     <script>
         var subTaskContainer = {};
     
         ZOHO.CREATOR.init().then(function () {
             console.log("Initialized");
-    
-            // Fetch all subtasks
+
             var config = {
                 appName: "task-management",
                 reportName: "All_Sub_Task_Report"
@@ -329,18 +30,16 @@
                 subTaskArr.forEach(subtask => {
                     const taskGrouping = subtask.Task_Grouping;
     
-                    // Initialize subTaskContainer for each Task_Grouping if not already
                     if (!subTaskContainer[taskGrouping]) {
                         subTaskContainer[taskGrouping] = [];
                     }
-                    // Add the subtask object to the corresponding Task_Grouping array
+        
                     subTaskContainer[taskGrouping].push(subtask);
                 });
             }).catch(function (error) {
                 console.error("Error fetching records:", error);
             });
-    
-            // Fetch all main tasks
+
             var allTask = {
                 appName: "task-management",
                 reportName: "All_Tasks"
@@ -353,7 +52,7 @@
                 recordArr.forEach(task => {
                     const taskNumber = task.Task_Number;
     
-                    // Append each main task to the table
+              
                     $("#task-table").append(`
                         <tr class="task-row" task-number="${taskNumber}" onclick="toggleSubtasks(this)">
                             <td colspan="7"><span class="icon" data-tooltip="Expand List">⬇️</span> ${task.Task_Name} ( ${taskNumber} )</td>
@@ -365,7 +64,6 @@
                         </tr>
                     `);
     
-                    // Initialize subTaskContainer array for each main task if not already done
                     if (!subTaskContainer[taskNumber]) {
                         subTaskContainer[taskNumber] = [];
                     }
@@ -374,16 +72,13 @@
                 console.error("Initialization error:", initError);
             });
         });
-    
-        // Toggle subtasks for a task when clicked
+
         function toggleSubtasks(taskRow) {
             const taskNumber = $(taskRow).attr('task-number');
             const subtaskRow = $(taskRow).next('.subtask-row');
             subtaskRow.toggle();
     
-            // Check if subTaskContainer contains subtasks for this task
             if (subTaskContainer[taskNumber] && subTaskContainer[taskNumber].length > 0) {
-                // Map over each subtask to render its details
                 const subtasksHtml = subTaskContainer[taskNumber].map(sub => `
                     <div>
                         <strong>Task Name:</strong> ${sub.SubTask_Name || 'Unnamed Subtask'}<br>
@@ -395,7 +90,6 @@
                     </div><hr>
                 `).join('');
                 
-                // Insert the generated HTML into the subtask row
                 subtaskRow.find('.subtasks').html(subtasksHtml);
             } else {
                 subtaskRow.find('.subtasks').html('<div>No subtasks available</div>');
@@ -435,160 +129,12 @@
                 </tr>
             </thead>
             <tbody id="task-table">
-                <!-- <tr class="task-row" onclick="toggleSubtasks(this)">
-                  <td colspan="7"><span class="icon" data-tooltip="Expand List">⬇️</span> General (3)</td>
-              </tr>
-              <tr class="subtask-header">
-                  <td>Task Name</td>
-                  <td>Assignee</td>
-                  <td>Status</td>
-                  <td>Priority</td>
-                  <td>Start Date</td>
-                  <td>End Date</td>
-                  <td>Action</td> 
-              </tr>
-              <tr class="subtask-row">
-                  <td>Zoho CRM Configuration</td>
-                  <td>Mary Smith</td>
-                  <td>Open</td>
-                  <td class="priority-urgent">Urgent</td>
-                  <td>2024-09-01</td>
-                  <td>2024-09-30</td>
-                  <td>
-                      <button class="view-details" onclick="window.open('https://example.com', '_blank')">View Details</button>
-                      <button class="edit-task" title="Edit Task">✏️</button>
-                      <button class="delete-task" title="Delete Task">🗑️</button>
-                  </td>
-              </tr>
-              <tr class="subtask-row">
-                  <td>Zoho CRM Customization</td>
-                  <td>Paul Allen</td>
-                  <td>Open</td>
-                  <td class="priority-medium">Medium</td>
-                  <td>2024-09-05</td>
-                  <td>2024-09-20</td>
-                  <td>
-                      <button class="view-details" onclick="window.open('https://example.com', '_blank')">View Details</button>
-                      <button class="edit-task" title="Edit Task">✏️</button>
-                      <button class="delete-task" title="Delete Task">🗑️</button>
-                  </td>
-              </tr>
-              <tr class="subtask-row">
-                  <td>Zoho CRM Integration</td>
-                  <td>Anna White</td>
-                  <td>Closed</td>
-                  <td class="priority-low">Low</td>
-                  <td>2024-08-20</td>
-                  <td>2024-09-10</td>
-                  <td>
-                      <button class="view-details" onclick="window.open('https://example.com', '_blank')">View Details</button>
-                      <button class="edit-task" title="Edit Task">✏️</button>
-                      <button class="delete-task" title="Delete Task">🗑️</button>
-                  </td>
-              </tr>
-              <tr class="task-row" onclick="toggleSubtasks(this)">
-                  <td colspan="7"><span class="icon" data-tooltip="Expand List">⬇️</span> Zoho Desk Configuration (2)</td>
-              </tr>
-              <tr class="subtask-header">
-                   <td>Task Name</td>
-                  <td>Assignee</td>
-                  <td>Status</td>
-                  <td>Priority</td>
-                  <td>Start Date</td>
-                  <td>End Date</td>
-                  <td>Action</td>
-              </tr>
-              <tr class="subtask-row">
-                  <td>Zoho Desk Customization</td>
-                  <td>Sarah Davis</td>
-                  <td>Open</td>
-                  <td class="priority-medium">Medium</td>
-                  <td>2024-09-01</td>
-                  <td>2024-09-15</td>
-                  <td>
-                      <button class="view-details" onclick="window.open('https://example.com', '_blank')">View Details</button>
-                      <button class="edit-task" title="Edit Task">✏️</button>
-                      <button class="delete-task" title="Delete Task">🗑️</button>
-                  </td>
-              </tr>
-              <tr class="subtask-row">
-                  <td>Zoho Desk Integration</td>
-                  <td>Chris Wilson</td>
-                  <td>Open</td>
-                  <td class="priority-urgent">Urgent</td>
-                  <td>2024-08-25</td>
-                  <td>2024-09-15</td>
-                  <td>
-                      <button class="view-details" onclick="window.open('https://example.com', '_blank')">View Details</button>
-                      <button class="edit-task" title="Edit Task">✏️</button>
-                      <button class="delete-task" title="Delete Task">🗑️</button>
-                  </td>
-              </tr> -->
+          
             </tbody>
         </table>
     </div>
 
     <script>
-
-        // function toggleSubtasks(mainTaskRow) {
-        //     var taskNumber = $(mainTaskRow).attr("task-number");
-        //     var subtaskRow = $(mainTaskRow).next(".subtask-row");
-        //     var subtaskDiv = subtaskRow.find(".subtasks");
-        //     subtaskRow.toggle();
-
-        //     if (subtaskDiv.is(':empty')) {
-        //         var subtasks = subTaskContainer[taskNumber];
-        //         if (subtasks && subtasks.length > 0) {
-        //             subtasks.forEach(subtask => {
-        //                 subtaskDiv.append(`
-        //             <div>${subtask.Subtask_Name} ( ${subtask.Subtask_Number} )</div>
-        //         `);
-        //             });
-        //         } else {
-        //             subtaskDiv.append(`<div>No subtasks available.</div>`);
-        //         }
-        //     }
-        // }
-
-        // function toggleSubtasks(mainTaskRow) {
-        //     var taskNumber = $(mainTaskRow).attr("task-number");
-        //     var subtaskRow = $(mainTaskRow).next(".subtask-row");
-        //     var subtaskDiv = subtaskRow.find(".subtasks");
-        //     subtaskRow.toggle();
-
-        //     if (subtaskDiv.is(':empty')) {
-        //         var subtasks = subTaskContainer[taskNumber];
-        //         if (subtasks && subtasks.length > 0) {
-        //             subtasks.forEach(subtask => {
-        //                 subtaskDiv.append(`
-        //             <div>${subtask.Subtask_Name} ( ${subtask.Subtask_Number} )</div>
-        //         `);
-        //             });
-        //         } else {
-        //             subtaskDiv.append(`<div>No subtasks available.</div>`);
-        //         }
-        //     }
-        // }
-
-        //  // Toggle subtasks for a task when clicked
-        //  function toggleSubtasks(taskRow) {
-        //     const taskNumber = $(taskRow).attr('task-number');
-        //     const subtaskRow = $(taskRow).next('.subtask-row');
-        //     subtaskRow.toggle();
-    
-        //     // Check if subTaskContainer contains subtasks for this task
-        //     if (subTaskContainer[taskNumber] && subTaskContainer[taskNumber].length > 0) {
-        //         // Map over each subtask to render its details
-        //         const subtasksHtml = subTaskContainer[taskNumber].map(sub => `
-        //             <div>${sub.Subtask_Name} (${sub.Task_Grouping})</div> <!-- Customize with subtask properties -->
-        //         `).join('');
-        //         // Insert the generated HTML into the subtask row
-        //         subtaskRow.find('.subtasks').html(subtasksHtml);
-        //     } else {
-        //         subtaskRow.find('.subtasks').html('<div>No subtasks available</div>');
-        //     }
-        // }
-
         function toggleSubtasks(taskRow) {
             const taskNumber = $(taskRow).attr('task-number');
             const subtaskRow = $(taskRow).next('.subtask-row');
