@@ -28,36 +28,6 @@
                 console.log("All Sub Tasks: ", subTaskArr);
 
 
-                    // subTaskArr.forEach(task => {
-                    //             const taskGrouping = task.Task_Grouping;
-                    //             const isMainTask = task.Task_Number_UI.includes(',');
-                    //             if (isMainTask) {
-                    //                 $("#task-table").append(`
-                    //                     <tr class="task-row" task-grouping="${taskGrouping}" onclick="toggleSubtasks(this)">
-                    //                         <td colspan="7">
-                    //                             <span class="icon" data-tooltip="Expand List">⬇️</span> ${task.SubTask_Name} (${taskGrouping})
-                    //                         </td>
-                    //                     </tr>
-                    //                     <tr class="subtask-row" data-task-grouping="${taskGrouping}" style="display: none;">
-                    //                         <td colspan="7">
-                    //                             <div class="subtasks"></div>
-                    //                         </td>
-                    //                     </tr>
-                    //                 `);
-                    //                 subTaskContainer[taskGrouping] = [];
-                    //             } else {
-                    //                 if (!subTaskContainer[taskGrouping]) {
-                    //                     subTaskContainer[taskGrouping] = [];
-                    //                 }
-                    //                 subTaskContainer[taskGrouping].push(task);
-                    //             }
-                    //         });
-                    //     }).catch(function (error) {
-                    //         console.error("Error fetching records:", error);
-                    //     });
-                
-
-
                 subTaskArr.forEach(task => {
                     const taskGrouping = task.Task_Grouping;
                     const isMainTask = task.Task_Number_UI.includes(',');
@@ -88,7 +58,7 @@
                     } else {
                         tasksInGroup.forEach(task => {
                             if (task.isMainTask) {
-                                // Main task row
+                            
                                 $("#task-table").append(`
                                      <tr class="task-row" task-grouping="${taskGrouping}" onclick="toggleSubtasks(this)">
                                       <td colspan="7">
@@ -102,7 +72,7 @@
                                  </tr>
                                `);
                             } else {
-                                // Subtask row
+                          
                                 $(`.subtask-row[data-task-grouping="${taskGrouping}"] .subtasks`).append(`
                                    <div class="subtask-item">${task.SubTask_Name}</div>
                                  `);
@@ -117,8 +87,6 @@
         })
 
     </script>
-
-
 
 </head>
 
@@ -172,7 +140,7 @@
                        <td>${sub.Priority ? sub.Priority.display_value : 'No Priority'}</td>
                         <td> ${sub.Start_Date || 'No Start Date'}</td>
                         <td> ${sub.Tentative_End_Date || 'No End Date'}</td>
-                        <td><button class="view-details" onclick="window.open('https://example.com', '_blank')">View Details</button></td>
+                        <td><button class="view-details" onclick="window.open('projects.html', '_blank')">View Details</button></td>
                         <td><button class="edit-task" title="Edit Task">✏️</button></td>
                         <td><button class="delete-task" title="Delete Task">🗑️</button></td>
                        

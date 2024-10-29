@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Dashboard</title>
+    <link rel="stylesheet" href="projectStyle.css">
+    <script src="https://cdn.tiny.cloud/1/b2xg5dxihadh7xeeius1609047cp45hcvf1pqjfd2f29d8wt/tinymce/7/tinymce.min.js"
+        referrerpolicy="origin"></script>
+    <!-- <strong><script src="https://cloud.tinymce.com/stable/tinymce.min.js"></script></strong> -->
+
+</head>
+
+<body>
+    <div class="container">
+        <main class="content">
+            <div class="task-header">
+                <h2>Sub Task Name</h2>
+                <p>By User FirstName LastName| Project Name</p>
+                <div class="status">
+                    <span>Work In Progress</span>
+                </div>
+            </div>
+
+            <section class="description">
+                <div class="dropdown">
+                    <p>Current Status</p>
+                    <div class="dropdown-selected" onclick="toggleDropdown()">
+                        <span id="selectedStatus">Work In Progress</span>
+                        <span class="arrow">▼</span>
+
+                    </div>
+
+                    <div class="dropdown-list" id="dropdownList">
+                        <input type="text" placeholder="Search" class="dropdown-search" oninput="filterOptions()">
+                        <div class="dropdown-option" onclick="selectOption('Open', '#4CAF50')">
+                            <span class="dot" style="background-color: #4CAF50;"></span> Open
+                        </div>
+                        <div class="dropdown-option" onclick="selectOption('Analysis', '#FFD700')">
+                            <span class="dot" style="background-color: #FFD700;"></span> Analysis
+                        </div>
+                        <div class="dropdown-option" onclick="selectOption('Work In Progress', '#1E90FF')">
+                            <span class="dot" style="background-color: #1E90FF;"></span> Work In Progress
+                        </div>
+                        <div class="dropdown-option" onclick="selectOption('On Hold', '#FFA500')">
+                            <span class="dot" style="background-color: #FFA500;"></span> On Hold
+                        </div>
+                        <div class="dropdown-option"
+                            onclick="selectOption('Awaiting Info From Team Member', '#FF4500')">
+                            <span class="dot" style="background-color: #FF4500;"></span> Awaiting Info From Team Member
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+
+            <section class="description">
+                <h3><span>></span> Description <span id="edit">+</span></h3>
+                <script>
+
+                    tinymce.init({
+                        selector: 'textarea',
+                        menubar: false,
+                        statusbar: false,
+                        skin: 'oxide-dark',
+                        content_css: 'dark',
+
+
+                        plugins: [
+                            'anchor', 'autolink', 'charmap', 'codesample', 'emoticons', 'image', 'link', 'lists', 'media', 'searchreplace', 'table', 'visualblocks', 'wordcount',
+                            'checklist', 'mediaembed', 'casechange', 'export', 'formatpainter', 'pageembed', 'a11ychecker', 'tinymcespellchecker', 'permanentpen', 'powerpaste', 'advtable', 'advcode', 'editimage', 'advtemplate', 'ai', 'mentions', 'tinycomments', 'tableofcontents', 'footnotes', 'mergetags', 'autocorrect', 'typography', 'inlinecss', 'markdown',
+                            'importword', 'exportword', 'exportpdf', 'autoresize'
+                        ],
+
+
+                        settings: {
+                            height: 200,
+                            max_height: 50,
+                            min_height: 50
+                        },
+                        toolbar: 'bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
+                        tinycomments_mode: 'embedded',
+                        tinycomments_author: 'Author name',
+                        mergetags_list: [
+                            { value: 'First.Name', title: 'First Name' },
+                            { value: 'Email', title: 'Email' },
+                        ],
+                        ai_request: (request, respondWith) => respondWith.string(() => Promise.reject('See docs to implement AI Assistant')),
+                        exportpdf_converter_options: { 'format': 'Letter', 'margin_top': '1in', 'margin_right': '1in', 'margin_bottom': '1in', 'margin_left': '1in' },
+                        exportword_converter_options: { 'document': { 'size': 'Letter' } },
+                        importword_converter_options: { 'formatting': { 'styles': 'inline', 'resets': 'inline', 'defaults': 'inline', } },
+                    });
+                </script>
+                <form>
+                    <textarea id="description-editor"></textarea>
+                    <div class="button-group">
+                        <button type="button" id="save-btn" class="action-btn">Save</button>
+                        <button type="button" id="cancel-btn" class="action-btn cancel">Cancel</button>
+                    </div>
+                </form>
+
+    </div>
+    </section>
+
+    <section class="task-info">
+        <h3>Task Information</h3>
+        <div class="info-group">
+            <label>Associated Team</label>
+            <div class="team">
+                <span class="member">Member 2</span>
+                <span class="member">Member 1</span>
+            </div>
+        </div>
+        <div class="info-group">
+            <label>Owner</label>
+            <select>
+                <option>Select User</option>
+            </select>
+        </div>
+        <div class="info-group">
+            <label>Work Hours</label>
+            <input type="text" value="00:00" disabled>
+        </div>
+        <div class="info-group">
+            <label>Status</label>
+            <select>
+                <option>Work In Progress</option>
+            </select>
+        </div>
+    </section>
+    </main>
+    </div>
+    <script src="projectScript.js"></script>
+</body>
+
+</html>
