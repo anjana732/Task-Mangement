@@ -14,7 +14,7 @@
     <script src="https://js.zohostatic.com/creator/widgets/version/1.0/widgetsdk-min.js"></script>
     <script>
         var subTaskContainer = {};
-    
+
         ZOHO.CREATOR.init().then(function () {
             console.log("Initialized");
 
@@ -22,82 +22,103 @@
                 appName: "task-management",
                 reportName: "All_Sub_Task_Report"
             };
-    
+
             ZOHO.CREATOR.API.getAllRecords(config).then(function (response) {
                 var subTaskArr = response.data;
                 console.log("All Sub Tasks: ", subTaskArr);
-    
-                subTaskArr.forEach(subtask => {
-                    const taskGrouping = subtask.Task_Grouping;
-    
+
+
+                    // subTaskArr.forEach(task => {
+                    //             const taskGrouping = task.Task_Grouping;
+                    //             const isMainTask = task.Task_Number_UI.includes(',');
+                    //             if (isMainTask) {
+                    //                 $("#task-table").append(`
+                    //                     <tr class="task-row" task-grouping="${taskGrouping}" onclick="toggleSubtasks(this)">
+                    //                         <td colspan="7">
+                    //                             <span class="icon" data-tooltip="Expand List">⬇️</span> ${task.SubTask_Name} (${taskGrouping})
+                    //                         </td>
+                    //                     </tr>
+                    //                     <tr class="subtask-row" data-task-grouping="${taskGrouping}" style="display: none;">
+                    //                         <td colspan="7">
+                    //                             <div class="subtasks"></div>
+                    //                         </td>
+                    //                     </tr>
+                    //                 `);
+                    //                 subTaskContainer[taskGrouping] = [];
+                    //             } else {
+                    //                 if (!subTaskContainer[taskGrouping]) {
+                    //                     subTaskContainer[taskGrouping] = [];
+                    //                 }
+                    //                 subTaskContainer[taskGrouping].push(task);
+                    //             }
+                    //         });
+                    //     }).catch(function (error) {
+                    //         console.error("Error fetching records:", error);
+                    //     });
+                
+
+
+                subTaskArr.forEach(task => {
+                    const taskGrouping = task.Task_Grouping;
+                    const isMainTask = task.Task_Number_UI.includes(',');
+
                     if (!subTaskContainer[taskGrouping]) {
                         subTaskContainer[taskGrouping] = [];
                     }
-        
-                    subTaskContainer[taskGrouping].push(subtask);
-                });
-            }).catch(function (error) {
-                console.error("Error fetching records:", error);
-            });
 
-            var allTask = {
-                appName: "task-management",
-                reportName: "All_Tasks"
-            };
-    
-            ZOHO.CREATOR.API.getAllRecords(allTask).then(function (response) {
-                var recordArr = response.data;
-                console.log("All Tasks: ", recordArr);
-    
-                recordArr.forEach(task => {
-                    const taskNumber = task.Task_Number;
-    
-              
-                    $("#task-table").append(`
-                        <tr class="task-row" task-number="${taskNumber}" onclick="toggleSubtasks(this)">
-                            <td colspan="7"><span class="icon" data-tooltip="Expand List">⬇️</span> ${task.Task_Name} ( ${taskNumber} )</td>
-                        </tr>
-                        <tr class="subtask-row" data-task-number="${taskNumber}" style="display: none;">
-                            <td colspan="7">
-                                <div class="subtasks"></div>
-                            </td>
-                        </tr>
-                    `);
-    
-                    if (!subTaskContainer[taskNumber]) {
-                        subTaskContainer[taskNumber] = [];
+                    subTaskContainer[taskGrouping].push({ ...task, isMainTask });
+                });
+
+               
+                Object.keys(subTaskContainer).forEach(taskGrouping => {
+                    const tasksInGroup = subTaskContainer[taskGrouping];
+
+                    if (tasksInGroup.length === 1) {
+                        const task = tasksInGroup[0];
+                        $("#task-table").append(`
+                              <tr class="task-row" task-grouping="${taskGrouping}" onclick="toggleSubtasks(this)">
+                                     <td colspan="7">
+                                         <span class="icon" data-tooltip="Expand List">⬇️</span> ${task.SubTask_Name} (${taskGrouping})
+                                     </td>
+                               </tr>
+                                <tr class="subtask-row" data-task-grouping="${taskGrouping}" style="display: none;">
+                                     <td colspan="7">No subtasks available</td>
+                                 </tr>
+                        `);
+                    } else {
+                        tasksInGroup.forEach(task => {
+                            if (task.isMainTask) {
+                                // Main task row
+                                $("#task-table").append(`
+                                     <tr class="task-row" task-grouping="${taskGrouping}" onclick="toggleSubtasks(this)">
+                                      <td colspan="7">
+                                          <span class="icon" data-tooltip="Expand List">⬇️</span> ${task.SubTask_Name} (${taskGrouping})
+                                         </td>
+                                     </tr>
+                                 <tr class="subtask-row" data-task-grouping="${taskGrouping}" style="display: none;">
+                                  <td colspan="7">
+                                  <div class="subtasks"></div>
+                                 </td>
+                                 </tr>
+                               `);
+                            } else {
+                                // Subtask row
+                                $(`.subtask-row[data-task-grouping="${taskGrouping}"] .subtasks`).append(`
+                                   <div class="subtask-item">${task.SubTask_Name}</div>
+                                 `);
+                            }
+                        });
                     }
-                });
-            }).catch(function (initError) {
-                console.error("Initialization error:", initError);
-            });
-        });
+              });
+     
+     
+            })
+    
+        })
 
-        function toggleSubtasks(taskRow) {
-            const taskNumber = $(taskRow).attr('task-number');
-            const subtaskRow = $(taskRow).next('.subtask-row');
-            subtaskRow.toggle();
-    
-            if (subTaskContainer[taskNumber] && subTaskContainer[taskNumber].length > 0) {
-                const subtasksHtml = subTaskContainer[taskNumber].map(sub => `
-                    <div>
-                        <strong>Task Name:</strong> ${sub.SubTask_Name || 'Unnamed Subtask'}<br>
-                        <strong>Assignee:</strong> ${sub.Assignee && sub.Assignee.length > 0 ? sub.Assignee[0].display_value : 'No Assignee'}<br>
-                        <strong>Status:</strong> ${sub.SubTask_Status ? sub.SubTask_Status.display_value : 'No Status'}<br>
-                        <strong>Priority:</strong> ${sub.Priority ? sub.Priority.display_value : 'No Priority'}<br>
-                        <strong>Start Date:</strong> ${sub.Start_Date || 'No Start Date'}<br>
-                        <strong>End Date:</strong> ${sub.Tentative_End_Date || 'No End Date'}
-                    </div><hr>
-                `).join('');
-                
-                subtaskRow.find('.subtasks').html(subtasksHtml);
-            } else {
-                subtaskRow.find('.subtasks').html('<div>No subtasks available</div>');
-            }
-        }
     </script>
-    
-    
+
+
 
 </head>
 
@@ -126,45 +147,43 @@
                     <th>Start Date</th>
                     <th>End Date</th>
                     <th>Sub Tasks</th>
+                   
                 </tr>
             </thead>
             <tbody id="task-table">
-          
+
             </tbody>
         </table>
     </div>
 
     <script>
-        function toggleSubtasks(taskRow) {
-            const taskNumber = $(taskRow).attr('task-number');
-            const subtaskRow = $(taskRow).next('.subtask-row');
-            subtaskRow.toggle();
-    
-            // Check if subTaskContainer contains subtasks for this task
-            if (subTaskContainer[taskNumber] && subTaskContainer[taskNumber].length > 0) {
-                // Map over each subtask to render its details
-                const subtasksHtml = subTaskContainer[taskNumber].map(sub => `
-                    <div>
-                        <strong>Task Name:</strong> ${sub.SubTask_Name || 'Unnamed Subtask'}<br>
-                        <strong>Assignee:</strong> ${sub.Assignee && sub.Assignee.length > 0 ? sub.Assignee[0].display_value : 'No Assignee'}<br>
-                        <strong>Status:</strong> ${sub.SubTask_Status ? sub.SubTask_Status.display_value : 'No Status'}<br>
-                        <strong>Priority:</strong> ${sub.Priority ? sub.Priority.display_value : 'No Priority'}<br>
-                        <strong>Start Date:</strong> ${sub.Start_Date || 'No Start Date'}<br>
-                        <strong>End Date:</strong> ${sub.Tentative_End_Date || 'No End Date'}
-                      
-                      <button class="view-details" onclick="window.open('https://example.com', '_blank')">View Details</button>
-                      <button class="edit-task" title="Edit Task">✏️</button>
-                      <button class="delete-task" title="Delete Task">🗑️</button>
-               
-                    </div><hr>
+
+                function toggleSubtasks(taskRow) {
+                    const taskGrouping = $(taskRow).attr('task-grouping');
+                    const subtaskRow = $(taskRow).next('.subtask-row');
+                    subtaskRow.toggle();
+
+                    if (subTaskContainer[taskGrouping] && subTaskContainer[taskGrouping].length > 0) {
+                        const subtasksHtml = subTaskContainer[taskGrouping].map(sub => `
+                    <tr>
+                        <td>${sub.SubTask_Name || 'Unnamed Subtask'}</td>
+                       <td>${sub.Assignee && sub.Assignee.length > 0 ? sub.Assignee[0].display_value : 'No Assignee'}</td>
+                        <td>${sub.SubTask_Status ? sub.SubTask_Status.display_value : 'No Status'}</td>
+                       <td>${sub.Priority ? sub.Priority.display_value : 'No Priority'}</td>
+                        <td> ${sub.Start_Date || 'No Start Date'}</td>
+                        <td> ${sub.Tentative_End_Date || 'No End Date'}</td>
+                        <td><button class="view-details" onclick="window.open('https://example.com', '_blank')">View Details</button></td>
+                        <td><button class="edit-task" title="Edit Task">✏️</button></td>
+                        <td><button class="delete-task" title="Delete Task">🗑️</button></td>
+                       
+                    </tr><hr>
                 `).join('');
-                
-                // Insert the generated HTML into the subtask row
-                subtaskRow.find('.subtasks').html(subtasksHtml);
-            } else {
-                subtaskRow.find('.subtasks').html('<div>No subtasks available</div>');
-            }
-        }
+
+                        subtaskRow.find('.subtasks').html(subtasksHtml);
+                    } else {
+                        subtaskRow.find('.subtasks').html('<div>No subtasks available</div>');
+                    }
+                }
     </script>
 
 
