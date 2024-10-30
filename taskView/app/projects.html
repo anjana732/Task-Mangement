@@ -14,13 +14,43 @@
 
 <body>
     <div class="container">
-        <main class="content">
-            <div class="task-header">
-                <h2>Sub Task Name</h2>
-                <p>By User FirstName LastName| Project Name</p>
-                <div class="status">
-                    <span>Work In Progress</span>
+
+        <aside class="sidebar">
+            <h3>All Open</h3>
+            <div class="task-list">
+                <div class="task-card">
+                    <span class="task-status">Work In Progress</span>
+                    <h4>SP3-T3 Zoho Creator Apps Audit</h4>
+                    <p>Bala M, Bhoumik S</p>
+                    <div class="icons">
+                        <i class="icon">⏰</i>
+                        <i class="icon">❗</i>
+                    </div>
                 </div>
+
+            </div>
+            <div class="task-list">
+                <div class="task-card">
+                    <span class="task-status">Work In Progress</span>
+                    <h4>SP3-T4 Zoho Creator Apps Audit Log</h4>
+                    <p>Bala M, Bhoumik S</p>
+                    <div class="icons">
+                        <i class="icon">⏰</i>
+                        <i class="icon">❗</i>
+                    </div>
+                </div>
+
+            </div>
+        </aside>
+
+        <main class="content">
+            <h2>Project Management and Co-ordination</h2>
+            <div class="task-header">
+                
+                <p>By Anjana Kumari | SEC-NGRID Project Implementation</p>
+                <!-- <div class="status">
+                    <span>Work In Progress</span>
+                </div> -->
             </div>
 
             <section class="description">
@@ -102,273 +132,182 @@
                     </div>
                 </form>
 
-    </div>
-    </section>
-
-    <!-- <section class="task-info">
-      <h3>  <span id="expand-task"> > </span>Task Information</h3>
-      <div id="task-expand-list">
-        <div class="info-group">
-            <label>Associated Team</label>
-            <div class="team">
-                <span class="member">Member 2</span>
-                <span class="member">Member 1</span>
-            </div>
-        </div>
-        <div class="info-group">
-            <label>Owner</label>
-            <select>
-                <option>User 1</option>
-                <option>User 2</option>
-                <option>User 3</option>
-                <option>User 4</option>
-                <option>User 5</option>
-                <option>User 6</option>
-                <option>User 7</option>
-                <option>User 8</option>
-            </select>
-        </div>
-        <div class="info-group">
-            <label>Helper</label>
-            <select>
-                <option>Helper 1</option>
-                <option>Helper 2</option>
-                <option>Helper 3</option>
-                <option>Helper 4</option>
-                <option>Helper 5</option>
-                <option>Helper 6</option>
-                <option>Helper 7</option>
-            </select>
-        </div>
-        <div class="info-group">
-            <label>Work Hours</label>
-            <input type="text" value="00:00" disabled>
-        </div>
-        <div class="info-group">
-            <label>Status</label>
-            <select>
-                <option>Work In Progress</option>
-            </select>
-        </div>
-        <div class="info-group">
-            <label>Start Date</label>
-            <select>
-                <option>Work In Progress</option>
-            </select>
-        </div>
-        <div class="info-group">
-            <label>Due Date</label>
-            <select>
-                <option>Work In Progress</option>
-            </select>
-        </div>
-        <div class="info-group">
-            <label>Duration</label>
-            <select>
-                <option>Work In Progress</option>
-            </select>
-        </div>
-        <div class="info-group">
-            <label>Priority</label>
-            <select>
-                <option>Work In Progress</option>
-            </select>
-        </div>
-        <div class="info-group">
-            <label>Completion percentage</label>
-            <select>
-                <option>Work In Progress</option>
-            </select>
-        </div>
-        <div class="info-group">
-            <label>Reminder</label>
-            <select>
-                <option>Work In Progress</option>
-            </select>
-        </div>
-        <div class="info-group">
-            <label>Recurrence</label>
-            <select>
-                <option>Work In Progress</option>
-            </select>
-        </div>
-    </div>
-    </section> -->
+            </section>
 
 
-    <section class="task-info">
-        <h3>
-            <span id="expand-task"> > </span> Task Information
-        </h3>
-        <div id="task-expand-list">
-            <div class="info-group">
-                <label>Associated Team</label>
-                <div class="team">
-                    <span class="member">Member 2</span>
-                    <span class="member">Member 1</span>
+            <section class="task-info description">
+                <h3>
+                    <span id="expand-task"> > </span> Task Information
+                </h3>
+                <div id="task-expand-list">
+                    <div class="info-group">
+                        <label>Associated Team</label>
+                        <div class="team">
+                            <span class="member">Member 2</span>
+                            <span class="member">Member 1</span>
+                        </div>
+                    </div>
+                    <div class="info-group">
+                        <label>Owner</label>
+                        <select>
+                            <option>User 1</option>
+                            <option>User 2</option>
+                            <option>User 3</option>
+                            <option>User 4</option>
+                            <option>User 5</option>
+                        </select>
+                    </div>
+                    <div class="info-group">
+                        <label>Helper</label>
+                        <select>
+                            <option>Helper 1</option>
+                            <option>Helper 2</option>
+                            <option>Helper 3</option>
+                        </select>
+                    </div>
+                    <div class="info-group">
+                        <label>Work Hours</label>
+                        <input type="text" value="00:00" disabled>
+                    </div>
+                    <div class="info-group">
+                        <label>Status</label>
+                        <select>
+                            <option>Work In Progress</option>
+                            <option>Completed</option>
+                        </select>
+                    </div>
+                    <div class="info-group">
+                        <label>Start Date</label>
+                        <input type="datetime-local">
+                    </div>
+                    <div class="info-group">
+                        <label>Due Date</label>
+                        <input type="datetime-local">
+                    </div>
+                    <div class="info-group">
+                        <label>Duration</label>
+                        <input type="text" placeholder="Enter duration">
+                    </div>
+                    <div class="info-group">
+                        <label>Priority</label>
+                        <select>
+                            <option>High</option>
+                            <option>Medium</option>
+                            <option>Low</option>
+                        </select>
+                    </div>
+                    <div class="info-group">
+                        <label>Completion Percentage</label>
+                        <input type="number" placeholder="0">
+                    </div>
+                    <div class="info-group">
+                        <label>Reminder</label>
+                        <select>
+                            <option>None</option>
+                            <option>1 Day Before</option>
+                        </select>
+                    </div>
+                    <div class="info-group">
+                        <label>Recurrence</label>
+                        <select>
+                            <option>None</option>
+                            <option>Weekly</option>
+                            <option>Monthly</option>
+                        </select>
+                    </div>
                 </div>
-            </div>
-            <div class="info-group">
-                <label>Owner</label>
-                <select>
-                    <option>User 1</option>
-                    <option>User 2</option>
-                    <option>User 3</option>
-                    <option>User 4</option>
-                    <option>User 5</option>
-                </select>
-            </div>
-            <div class="info-group">
-                <label>Helper</label>
-                <select>
-                    <option>Helper 1</option>
-                    <option>Helper 2</option>
-                    <option>Helper 3</option>
-                </select>
-            </div>
-            <div class="info-group">
-                <label>Work Hours</label>
-                <input type="text" value="00:00" disabled>
-            </div>
-            <div class="info-group">
-                <label>Status</label>
-                <select>
-                    <option>Work In Progress</option>
-                    <option>Completed</option>
-                </select>
-            </div>
-            <div class="info-group">
-                <label>Start Date</label>
-                <input type="datetime-local">
-            </div>
-            <div class="info-group">
-                <label>Due Date</label>
-                <input type="datetime-local">
-            </div>
-            <div class="info-group">
-                <label>Duration</label>
-                <input type="text" placeholder="Enter duration">
-            </div>
-            <div class="info-group">
-                <label>Priority</label>
-                <select>
-                    <option>High</option>
-                    <option>Medium</option>
-                    <option>Low</option>
-                </select>
-            </div>
-            <div class="info-group">
-                <label>Completion Percentage</label>
-                <input type="number" placeholder="0">
-            </div>
-            <div class="info-group">
-                <label>Reminder</label>
-                <select>
-                    <option>None</option>
-                    <option>1 Day Before</option>
-                </select>
-            </div>
-            <div class="info-group">
-                <label>Recurrence</label>
-                <select>
-                    <option>None</option>
-                    <option>Weekly</option>
-                    <option>Monthly</option>
-                </select>
-            </div>
-        </div>
-    </section>
-    
+            </section>
 
-    <section>
-        <div class="tab-container">
-        
-            <div class="tabs">
-                <button class="tab-button active" onclick="showTab('logHours')">Related Task</button>
-                <button class="tab-button" onclick="showTab('comments')">Comments</button>
-                <button class="tab-button" onclick="showTab('subtasks')">Task History</button>
-                <button class="tab-button" onclick="showTab('documents')">Documents</button>
-                <button class="tab-button active" onclick="showTab('logHours')">Worklog</button>
-                <button class="tab-button active" onclick="showTab('logHours')">Status Timeline</button>
-                <button class="tab-button active" onclick="showTab('logHours')">Issues</button>
-            </div>
-        
-      
-            <div class="tab-content">
-           
-                <div id="logHours" class="tab-pane active">
-                    <h3>Related Task</h3>
-                    <button class="add-button">Add Time Log</button>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>User</th>
-                                <th>Daily Log Hours</th>
-                                <th>Time Period</th>
-                                <th>Date</th>
-                                <th>Billing Type</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Bhoumik San</td>
-                                <td>03:00</td>
-                                <td>03:00</td>
-                                <td>29/10/2024</td>
-                                <td>Billable</td>
-                            </tr>
-                            <tr>
-                                <td>Saidatt Bodh</td>
-                                <td>00:20</td>
-                                <td>08:02</td>
-                                <td>28/10/2024</td>
-                                <td>Billable</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-        
-                <div id="comments" class="tab-pane">
-                    <h3>Comments</h3>
-                    <form>
-                        <textarea placeholder="Add your comment here..."></textarea>
-                        <button type="button">Submit Comment</button>
-                    </form>
-                </div>
-        
-                <div id="subtasks" class="tab-pane">
-                    <h3>Task History</h3>
-                    <p>Subtasks content goes here...</p>
-                </div>
-        
-                <div id="documents" class="tab-pane">
-                    <h3>Files</h3>
-                    <p>Documents content goes here...</p>
-                </div>
-        
-                <div id="documents" class="tab-pane">
-                    <h3>Worklog</h3>
-                    <p>Documents content goes here...</p>
-                </div>
 
-                <div id="documents" class="tab-pane">
-                    <h3>Worklog</h3>
-                    <p>Documents content goes here...</p>
-                </div>
+            <section id="description">
+                <div class="tab-container">
 
-                <div id="documents" class="tab-pane">
-                    <h3>TimeLine</h3>
-                    <p>Documents content goes here...</p>
-                </div>
+                    <div class="tabs">
+                        <button class="tab-button active" onclick="showTab('logHours')">Related Task</button>
+                        <button class="tab-button" onclick="showTab('comments')">Comments</button>
+                        <button class="tab-button" onclick="showTab('subtasks')">Task History</button>
+                        <button class="tab-button" onclick="showTab('documents')">Documents</button>
+                        <button class="tab-button active" onclick="showTab('logHours')">Worklog</button>
+                        <button class="tab-button active" onclick="showTab('logHours')">Status Timeline</button>
+                        <button class="tab-button active" onclick="showTab('logHours')">Issues</button>
+                    </div>
 
-                <div id="documents" class="tab-pane">
-                    <h3>Worklog</h3>
-                    <p>Documents content goes here...</p>
+
+                    <div class="tab-content">
+
+                        <div id="logHours" class="tab-pane active">
+                            <h3>Related Task</h3>
+                            <button class="add-button">Add Time Log</button>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>User</th>
+                                        <th>Daily Log Hours</th>
+                                        <th>Time Period</th>
+                                        <th>Date</th>
+                                        <th>Billing Type</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Bhoumik San</td>
+                                        <td>03:00</td>
+                                        <td>03:00</td>
+                                        <td>29/10/2024</td>
+                                        <td>Billable</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Saidatt Bodh</td>
+                                        <td>00:20</td>
+                                        <td>08:02</td>
+                                        <td>28/10/2024</td>
+                                        <td>Billable</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div id="comments" class="tab-pane">
+                            <h3>Comments</h3>
+                            <form>
+                                <textarea placeholder="Add your comment here..."></textarea>
+                                <button type="button">Submit Comment</button>
+                            </form>
+                        </div>
+
+                        <div id="subtasks" class="tab-pane">
+                            <h3>Task History</h3>
+                            <p>Subtasks content goes here...</p>
+                        </div>
+
+                        <div id="documents" class="tab-pane">
+                            <h3>Files</h3>
+                            <p>Documents content goes here...</p>
+                        </div>
+
+                        <div id="documents" class="tab-pane">
+                            <h3>Worklog</h3>
+                            <p>Documents content goes here...</p>
+                        </div>
+
+                        <div id="documents" class="tab-pane">
+                            <h3>Worklog</h3>
+                            <p>Documents content goes here...</p>
+                        </div>
+
+                        <div id="documents" class="tab-pane">
+                            <h3>TimeLine</h3>
+                            <p>Documents content goes here...</p>
+                        </div>
+
+                        <div id="documents" class="tab-pane">
+                            <h3>Worklog</h3>
+                            <p>Documents content goes here...</p>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
-    </section>
-    </main>
+            </section>
+        </main>
     </div>
     <script src="projectScript.js"></script>
 </body>
