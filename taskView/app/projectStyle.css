@@ -265,7 +265,8 @@ table th, table td {
     margin-bottom: 15px;
 }
 label {
-    font-size: 0.9em;
+    font-size: 16px;
+    margin-left: 5px;
 }
 p{
     color: #918b8b;
@@ -301,4 +302,36 @@ p{
     padding-left: 18px;
     color: #918b8b;
     margin-top: 10px;
+}
+
+#expand-task{
+    font-size: 20px;
+    color: #ff5722;
+    cursor: pointer;
+}
+
+#expand-task:hover{
+    color: #cf7d64;
+}
+#task-expand-list{
+    display: none;
+}
+
+
+
+#l-r-main{
+    display: flex;
+    justify-content: space-between;
+}
+#left{
+    width: 47%;
+}
+#right{
+    width: 47%;
+}
+hr {
+    border: none; 
+    height: 1px; 
+    background-color: #838080; 
+    margin: 10px 5px 0px 5px;
 }

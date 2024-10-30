@@ -46,7 +46,7 @@
         <main class="content">
             <h2>Project Management and Co-ordination</h2>
             <div class="task-header">
-                
+
                 <p>By Anjana Kumari | SEC-NGRID Project Implementation</p>
                 <!-- <div class="status">
                     <span>Work In Progress</span>
@@ -143,10 +143,21 @@
                     <div class="info-group">
                         <label>Associated Team</label>
                         <div class="team">
-                            <span class="member">Member 2</span>
-                            <span class="member">Member 1</span>
+                            <!-- <span class="member">Member 2</span>
+                            <span class="member">Member 1</span> -->
+                            <select multiple>
+                                <option>Team 1</option>
+                                <option>Team 2</option>
+                                <option>Team 3</option>
+                                <option>Team 4</option>
+                                <option>Team 5</option>
+                                <option>Team 6</option>
+                            </select>
+
                         </div>
+                        <hr>
                     </div>
+
                     <div class="info-group">
                         <label>Owner</label>
                         <select>
@@ -156,64 +167,88 @@
                             <option>User 4</option>
                             <option>User 5</option>
                         </select>
+                        <hr>
                     </div>
-                    <div class="info-group">
-                        <label>Helper</label>
-                        <select>
-                            <option>Helper 1</option>
-                            <option>Helper 2</option>
-                            <option>Helper 3</option>
-                        </select>
-                    </div>
-                    <div class="info-group">
-                        <label>Work Hours</label>
-                        <input type="text" value="00:00" disabled>
-                    </div>
-                    <div class="info-group">
-                        <label>Status</label>
-                        <select>
-                            <option>Work In Progress</option>
-                            <option>Completed</option>
-                        </select>
-                    </div>
-                    <div class="info-group">
-                        <label>Start Date</label>
-                        <input type="datetime-local">
-                    </div>
-                    <div class="info-group">
-                        <label>Due Date</label>
-                        <input type="datetime-local">
-                    </div>
-                    <div class="info-group">
-                        <label>Duration</label>
-                        <input type="text" placeholder="Enter duration">
-                    </div>
-                    <div class="info-group">
-                        <label>Priority</label>
-                        <select>
-                            <option>High</option>
-                            <option>Medium</option>
-                            <option>Low</option>
-                        </select>
-                    </div>
-                    <div class="info-group">
-                        <label>Completion Percentage</label>
-                        <input type="number" placeholder="0">
-                    </div>
-                    <div class="info-group">
-                        <label>Reminder</label>
-                        <select>
-                            <option>None</option>
-                            <option>1 Day Before</option>
-                        </select>
-                    </div>
-                    <div class="info-group">
-                        <label>Recurrence</label>
-                        <select>
-                            <option>None</option>
-                            <option>Weekly</option>
-                            <option>Monthly</option>
-                        </select>
+                    <div id="l-r-main">
+                        <div id="left">
+                            <div class="info-group">
+                                <label>Helper</label>
+                                <select>
+                                    <option>Helper 1</option>
+                                    <option>Helper 2</option>
+                                    <option>Helper 3</option>
+                                    <option>Helper 4</option>
+                                    <option>Helper 5</option>
+                                </select>
+                                <hr>
+                            </div>
+
+                            <div class="info-group">
+                                <label>Status</label>
+                                <select>
+                                    <option>Work In Progress</option>
+                                    <option>Completed</option>
+                                </select>
+                                <hr>
+                            </div>
+
+                            <div class="info-group">
+                                <label>Start Date</label>
+                                <input type="datetime-local">
+                                <hr>
+                            </div>
+
+                            <div class="info-group">
+                                <label>Duration</label>
+                                <input type="text" placeholder="Enter duration">
+                                <hr>
+                            </div>
+                            <div class="info-group">
+                                <label>Completion Percentage</label>
+                                <input type="number" placeholder="0">
+                                <hr>
+                            </div>
+                            <div class="info-group">
+                                <label>Reminder</label>
+                                <select>
+                                    <option>None</option>
+                                    <option>1 Day Before</option>
+                                </select>
+                                <hr>
+                            </div>
+                        </div>
+                        <div id="right">
+                            <div class="info-group">
+                                <label>Work Hours</label>
+                                <input type="text" value="00:00" disabled>
+                                <hr>
+                            </div>
+
+                            <div class="info-group">
+                                <label>Due Date</label>
+                                <input type="datetime-local">
+                                <hr>
+                            </div>
+
+                            <div class="info-group">
+                                <label>Priority</label>
+                                <select>
+                                    <option>High</option>
+                                    <option>Medium</option>
+                                    <option>Low</option>
+                                </select>
+                                <hr>
+                            </div>
+                            <div class="info-group">
+                                <label>Recurrence</label>
+                                <select>
+                                    <option>None</option>
+                                    <option>Weekly</option>
+                                    <option>Monthly</option>
+                                </select>
+                                <hr>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </section>
