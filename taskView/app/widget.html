@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 
 <head>
@@ -12,7 +12,7 @@
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script src="https://live.zwidgets.com/js-sdk/1.1/ZohoEmbededAppSDK.min.js"></script>
     <script src="https://js.zohostatic.com/creator/widgets/version/1.0/widgetsdk-min.js"></script>
-  
+<!--   
 <script>
         var subTaskContainer = {};
     
@@ -75,10 +75,166 @@
             const subtaskRow = $(taskRow).next('.subtask-row');
             subtaskRow.toggle();
         }
-    </script>
+    </script> -->
+
+     <script>
+        var subTaskContainer = {};
     
-
-
+        ZOHO.CREATOR.init().then(function () {
+            console.log("Initialized");
+    
+            var config = {
+                appName: "task-management",
+                reportName: "All_Sub_Task_Report"
+            };
+    
+            ZOHO.CREATOR.API.getAllRecords(config).then(function (response) {
+                var subTaskArr = response.data;
+                console.log("All Sub Tasks: ", subTaskArr);
+    
+                subTaskArr.forEach(task => {
+                    const taskGrouping = task.Task_Grouping;
+                    const isMainTask = task.Task_Number_UI.includes(',');
+    
+                    if (!subTaskContainer[taskGrouping]) {
+                        subTaskContainer[taskGrouping] = [];
+                    }
+    
+                    subTaskContainer[taskGrouping].push({ ...task, isMainTask });
+                });
+    
+                Object.keys(subTaskContainer).forEach(taskGrouping => {
+                    const tasksInGroup = subTaskContainer[taskGrouping];
+                    console.log("task in group", tasksInGroup);
+                    $("#task-table").append(`
+                        <tr class="task-row" task-grouping="${taskGrouping}" onclick="toggleSubtasks(this)">
+                            <td colspan="7">
+                                <span class="icon" data-tooltip="Expand List">⬇️</span> ${tasksInGroup[0].SubTask_Name} (${taskGrouping})
+                            </td>
+                        </tr>
+                        <tr class="subtask-row" data-task-grouping="${taskGrouping}" style="display: none;">
+                            <td colspan="7">
+                                <div class="subtasks"></div>
+                            </td>
+                        </tr>
+                    `);
+    
+                    tasksInGroup.forEach(task => {
+                        const mainTaskRelationID = task[`Main_Task_Relation.ID`];
+                        const taskID = task.ID;
+    
+                        let viewDetailsUrl;
+                        if (!mainTaskRelationID) {
+                            viewDetailsUrl = `https://creatorapp.zoho.com/support2327/task-management#Page:Task_Detail_View?taskid=${taskID}&activeTab=dashboard`;
+                            
+                          
+                        } else {
+                            viewDetailsUrl = `https://creatorapp.zoho.com/support2327/task-management#Page:Subtask_Detail_View?taskid=${taskID}&subtaskid=${mainTaskRelationID}&activeTab=dashboard`;
+                            task.SubTask_Name += ' ❗️';
+                        }
+    
+                        if (!task.isMainTask) {
+                            $(`.subtask-row[data-task-grouping="${taskGrouping}"] .subtasks`).append(`
+                                <div class="subtask-item">
+                                    ${task.SubTask_Name || 'Unnamed Subtask'}
+                                    <button class="view-details" onclick="window.open('${viewDetailsUrl}', '_blank')">View Details</button>
+                                </div>
+                            `);
+                        }
+                    });
+            
+            
+                });
+    
+                console.log("subtask Container: ", subTaskContainer);
+            });
+        });
+    
+        function toggleSubtasks(taskRow) {
+            const subtaskRow = $(taskRow).next('.subtask-row');
+            subtaskRow.toggle();
+        }
+    </script> 
+<!--     
+    <script>
+        var subTaskContainer = {};
+    
+        ZOHO.CREATOR.init().then(function () {
+            console.log("Initialized");
+    
+            var config = {
+                appName: "task-management",
+                reportName: "All_Sub_Task_Report"
+            };
+    
+            ZOHO.CREATOR.API.getAllRecords(config).then(function (response) {
+                var subTaskArr = response.data;
+                console.log("All Sub Tasks: ", subTaskArr);
+    
+                subTaskArr.forEach(task => {
+                    const taskGrouping = task.Task_Grouping;
+                    const isMainTask = task.Task_Number_UI.includes(',');
+    
+                    if (!subTaskContainer[taskGrouping]) {
+                        subTaskContainer[taskGrouping] = [];
+                    }
+    
+                    subTaskContainer[taskGrouping].push({ ...task, isMainTask });
+                });
+    
+                Object.keys(subTaskContainer).forEach(taskGrouping => {
+                    const tasksInGroup = subTaskContainer[taskGrouping];
+    
+                    $("#task-table").append(`
+                        <tr class="task-row" task-grouping="${taskGrouping}" onclick="toggleSubtasks(this)">
+                            <td colspan="7">
+                                <span class="icon" data-tooltip="Expand List">⬇️</span> ${tasksInGroup[0].SubTask_Name} (${taskGrouping})
+                            </td>
+                        </tr>
+                        <tr class="subtask-row" data-task-grouping="${taskGrouping}" style="display: none;">
+                            <td colspan="7">
+                                <div class="subtasks"></div>
+                            </td>
+                        </tr>
+                    `);
+    
+                    tasksInGroup.forEach(task => {
+                        const mainTaskRelationID = task[`Main_Task_Relation.ID`];
+                        console.log(mainTaskRelationID,"main task relation Id");
+                        const taskID = task.ID;
+                        console.log(taskID,"Task Id");
+                        let viewDetailsUrl;
+                        if (!mainTaskRelationID) {
+                            viewDetailsUrl = `https://creatorapp.zoho.com/support2327/task-management#Page:Task_Detail_View?taskid=${taskID}&activeTab=dashboard`;
+                        } else {
+                            viewDetailsUrl = `https://creatorapp.zoho.com/support2327/task-management#Page:Subtask_Detail_View?taskid=${taskID}&subtaskid=${mainTaskRelationID}&activeTab=dashboard`;
+                        }
+    
+                        // Only add the exclamation mark for main tasks
+                        const subTaskName = (!mainTaskRelationID) ? `${task.SubTask_Name || 'Unnamed Subtask'} ❗️` : `${task.SubTask_Name || 'Unnamed Subtask'}`;
+    
+                        if (!task.isMainTask) {
+                            $(`.subtask-row[data-task-grouping="${taskGrouping}"] .subtasks`).append(`
+                                <div class="subtask-item">
+                                    ${subTaskName}
+                                    <button class="view-details" onclick="window.open('${viewDetailsUrl}', '_blank')">View Details</button>
+                                </div>
+                            `);
+                        }
+                    });
+              
+                });
+    
+                console.log("subtask Container: ", subTaskContainer);
+            });
+        });
+    
+        function toggleSubtasks(taskRow) {
+            const subtaskRow = $(taskRow).next('.subtask-row');
+            subtaskRow.toggle();
+        }
+    </script>
+     -->
 </head>
 
 <body>
