@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html>
 
 <head>
@@ -12,81 +12,72 @@
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script src="https://live.zwidgets.com/js-sdk/1.1/ZohoEmbededAppSDK.min.js"></script>
     <script src="https://js.zohostatic.com/creator/widgets/version/1.0/widgetsdk-min.js"></script>
-    <script>
+  
+<script>
         var subTaskContainer = {};
-
+    
         ZOHO.CREATOR.init().then(function () {
             console.log("Initialized");
-
+    
             var config = {
                 appName: "task-management",
                 reportName: "All_Sub_Task_Report"
             };
-
+    
             ZOHO.CREATOR.API.getAllRecords(config).then(function (response) {
                 var subTaskArr = response.data;
                 console.log("All Sub Tasks: ", subTaskArr);
-
-
+    
                 subTaskArr.forEach(task => {
                     const taskGrouping = task.Task_Grouping;
                     const isMainTask = task.Task_Number_UI.includes(',');
-
+    
                     if (!subTaskContainer[taskGrouping]) {
                         subTaskContainer[taskGrouping] = [];
                     }
-
+    
                     subTaskContainer[taskGrouping].push({ ...task, isMainTask });
                 });
-
-               
+    
                 Object.keys(subTaskContainer).forEach(taskGrouping => {
                     const tasksInGroup = subTaskContainer[taskGrouping];
-
-                    if (tasksInGroup.length === 1) {
-                        const task = tasksInGroup[0];
-                        $("#task-table").append(`
-                              <tr class="task-row" task-grouping="${taskGrouping}" onclick="toggleSubtasks(this)">
-                                     <td colspan="7">
-                                         <span class="icon" data-tooltip="Expand List">⬇️</span> ${task.SubTask_Name} (${taskGrouping})
-                                     </td>
-                               </tr>
-                                <tr class="subtask-row" data-task-grouping="${taskGrouping}" style="display: none;">
-                                     <td colspan="7">No subtasks available</td>
-                                 </tr>
-                        `);
-                    } else {
-                        tasksInGroup.forEach(task => {
-                            if (task.isMainTask) {
-                            
-                                $("#task-table").append(`
-                                     <tr class="task-row" task-grouping="${taskGrouping}" onclick="toggleSubtasks(this)">
-                                      <td colspan="7">
-                                          <span class="icon" data-tooltip="Expand List">⬇️</span> ${task.SubTask_Name} (${taskGrouping})
-                                         </td>
-                                     </tr>
-                                 <tr class="subtask-row" data-task-grouping="${taskGrouping}" style="display: none;">
-                                  <td colspan="7">
-                                  <div class="subtasks"></div>
-                                 </td>
-                                 </tr>
-                               `);
-                            } else {
-                          
-                                $(`.subtask-row[data-task-grouping="${taskGrouping}"] .subtasks`).append(`
-                                   <div class="subtask-item">${task.SubTask_Name}</div>
-                                 `);
-                            }
-                        });
-                    }
-              });
-     
-     
-            })
     
-        })
-
+                    $("#task-table").append(`
+                        <tr class="task-row" task-grouping="${taskGrouping}" onclick="toggleSubtasks(this)">
+                            <td colspan="7">
+                                <span class="icon" data-tooltip="Expand List">⬇️</span> ${tasksInGroup[0].SubTask_Name} (${taskGrouping})
+                            </td>
+                        </tr>
+                        <tr class="subtask-row" data-task-grouping="${taskGrouping}" style="display: none;">
+                            <td colspan="7">
+                                <div class="subtasks"></div>
+                            </td>
+                        </tr>
+                    `);
+    
+                    tasksInGroup.forEach(task => {
+                        if (!task.isMainTask) {
+                            $(`.subtask-row[data-task-grouping="${taskGrouping}"] .subtasks`).append(`
+                                <div class="subtask-item">
+                                    ${task.SubTask_Name || 'Unnamed Subtask'}
+                                </div>
+                            `);
+                        }
+                    });
+                });
+    
+                console.log("subtask Container: ", subTaskContainer);
+            });
+    
+        });
+  
+        function toggleSubtasks(taskRow) {
+            const subtaskRow = $(taskRow).next('.subtask-row');
+            subtaskRow.toggle();
+        }
     </script>
+    
+
 
 </head>
 
@@ -140,7 +131,7 @@
                        <td>${sub.Priority ? sub.Priority.display_value : 'No Priority'}</td>
                         <td> ${sub.Start_Date || 'No Start Date'}</td>
                         <td> ${sub.Tentative_End_Date || 'No End Date'}</td>
-                        <td><button class="view-details" onclick="window.open('https://creatorapp.zoho.com/support2327/task-management/#Page:Overall_Dashboard', '_blank')">View Details</button></td>
+                        <td><button class="view-details" onclick="window.open('https://creatorapp.zoho.com/support2327/task-management#Page:Subtask_Detail_View?taskid=3198580000006090323&subtaskid=3198580000006090233&activeTab=dashboard', '_blank')">View Details</button></td>
                         <td><button class="edit-task" title="Edit Task">✏️</button></td>
                         <td><button class="delete-task" title="Delete Task">🗑️</button></td>
                        
@@ -158,3 +149,4 @@
 </body>
 
 </html>
+
